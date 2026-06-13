@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>its_zenk cày thuê</title>
+    <style>
+        /* --- Giao diện tổng thể --- */
+        body {
+            background-color: #0b0f19;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* --- Banner & Avatar --- */
+        .header-container {
+            text-align: center;
+            padding: 40px 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 20px;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 12px; /* Đổi thành bo góc vuông theo ảnh mẫu */
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.4);
+            object-fit: cover;
+        }
+
+        .badge {
+            background-color: #1e293b;
+            border: 1px solid #3b82f6;
+            color: #3b82f6;
+            padding: 5px 16px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-size: 42px;
+            margin: 5px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .sub-features {
+            color: #9ca3af;
+            font-size: 14px;
+            margin: 8px 0 15px 0;
+        }
+
+        .username-tag {
+            background-color: #111827;
+            border: 1px solid #334155;
+            padding: 6px 18px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 13px;
+            color: #ffffff;
+        }
+        .username-tag span {
+            color: #10b981;
+            margin-right: 5px;
+        }
+
+        /* --- KHU VỰC GIẢM GIÁ DISCORD --- */
+        .discord-promo {
+            background: linear-gradient(135deg, #4c1d95, #1e1b4b);
+            border: 2px dashed #8b5cf6;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 10px auto 30px;
+            max-width: 550px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
+            width: 90%;
+        }
+
+        .discord-promo p {
+            margin: 0 0 10px 0;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .discord-btn {
+            display: inline-block;
+            background-color: #5865F2;
+            color: white;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .discord-btn:hover {
+            background-color: #4752c4;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4);
+        }
+
+        /* --- Danh sách dịch vụ dạng Động --- */
+        .services-list {
+            width: 90%;
+            max-width: 800px;
+            padding-bottom: 40px;
+        }
+
+        .accordion-item {
+            background-color: #111827;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            border-left: 5px solid #3b82f6;
+            transition: all 0.3s ease;
+        }
+        
+        /* Màu viền trái riêng biệt cho từng mục giống như ảnh của bạn */
+        .accordion-item.level { border-left-color: #3b82f6; }
+        .accordion-item.leviathan { border-left-color: #eab308; }
+        .accordion-item.ring { border-left-color: #a855f7; }
+        .accordion-item.spirit { border-left-color: #06b6d4; }
+        .accordion-item.dragon { border-left-color: #ec4899; }
+        .accordion-item.sword { border-left-color: #f97316; }
+        .accordion-item.race { border-left-color: #10b981; }
+
+        .accordion-header {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 20px;
+            color: white;
+            text-align: left;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .accordion-header:hover { background-color: #1f2937; }
+        .header-title { display: flex; align-items: center; gap: 15px; }
+        .icon-arrow { font-size: 12px; transition: transform 0.3s ease; color: #6b7280; }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: #0f172a;
+        }
+
+        .price-grid {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .price-card {
+            background-color: #1e293b;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            text-align: center;
+            position: relative;
+        }
+
+        .price-card .tier { font-size: 14px; color: #94a3b8; margin-bottom: 8px; font-weight: 500; }
+        .price-card .cost { font-size: 20px; font-weight: bold; color: #f59e0b; }
+        .price-card .note { font-size: 11px; color: #64748b; margin-top: 5px; }
+
+        .accordion-item.active .accordion-content { max-height: 1000px; }
+        .accordion-item.active .icon-arrow { transform: rotate(180deg); }
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <div class="avatar-wrapper">
+            <img class="avatar" src="00401f37-5f47-448a-8cc1-74a0a16fc700.jpg" alt="Avatar">
+        </div>
+        <div class="badge">✦ DỊCH VỤ CÀY THUÊ ✦</div>
+        <h1 id="web-title">BẢNG GIÁ CÀY THUÊ</h1>
+        <div class="sub-features">Giá rẻ • Uy tín • Nhanh chóng</div>
+        <div class="username-tag"><span>●</span> its_zenk</div>
+    </div>
+
+    <div class="discord-promo">
+        <p>🎁 <strong>ƯU ĐÃI ĐẶC BIỆT:</strong> Ai vô Discord sẽ được <strong>giảm ngay 5%</strong> tổng hóa đơn!</p>
+        <a id="discord-link" href="https://discord.com/invite/eZ7JZf3Nuu" target="_blank" class="discord-btn">Tham Gia Discord Ngay</a>
+    </div>
+
+    <div class="services-list" id="main-services-container">
+    </div>
+
+    <script>
+        const defaultData = {
+            level: [
+                { tier: "Level 1 – 700", cost: "10.000đ", note: "" },
+                { tier: "Level 700 – 1500", cost: "10.000đ", note: "" },
+                { tier: "Level 1500 – 2800", cost: "20.000đ", note: "" }
+            ],
+            leviathan: [
+                { tier: "10 Mythical", cost: "25.000đ", note: "" },
+                { tier: "20 Legendary", cost: "25.000đ", note: "" }
+            ],
+            ring: [
+                { tier: "1 Legendary Ring (Random)", cost: "15.000đ", note: "" },
+                { tier: "1 Mythical Ring (Random)", cost: "60.000đ", note: "" },
+                { tier: "10 Legendary Ring (Random)", cost: "80.000đ", note: "" }
+            ],
+            spirit: [
+                { tier: "Các loại Nhẫn III (Random)", cost: "15.000đ", note: "" },
+                { tier: "Ring of Twin Blade IV", cost: "75.000đ", note: "" },
+                { tier: "Ring of Outlaw IV", cost: "75.000đ", note: "" },
+                { tier: "Ring of Steelheart IV", cost: "70.000đ", note: "" },
+                { tier: "Ring of Arcanist IV", cost: "70.000đ", note: "" },
+                { tier: "Ring of Spirit", cost: "80.000đ", note: "" },
+                { tier: "Ring of Might", cost: "85.000đ", note: "" }
+            ],
+            dragon: [
+                { tier: "Full Đai", cost: "40.000đ", note: "Có sẵn 1 đai trừ đi 8k" },
+                { tier: "Dragonheart + 500 Mastery", cost: "20.000đ", note: "" },
+                { tier: "Dragonstorm + 500 Mastery", cost: "20.000đ", note: "" }
+            ],
+            sword: [
+                { tier: "Yoru V1 - V3", cost: "90.000đ", note: "" },
+                { tier: "Fox Lamp", cost: "30.000đ", note: "" },
+                { tier: "Dragonheart + 500 Mastery", cost: "20.000đ", note: "" },
+                { tier: "CDK", cost: "10.000đ", note: "Yêu cầu có sẵn Tushita & Yama" },
+                { tier: "TTK", cost: "10.000đ", note: "Yêu cầu có sẵn 3 kiếm Legendary" },
+                { tier: "Tushita", cost: "10.000đ", note: "" },
+                { tier: "Yama", cost: "10.000đ", note: "" },
+                { tier: "Shisui", cost: "10.000đ", note: "" },
+                { tier: "Wando", cost: "10.000đ", note: "" },
+                { tier: "Saishi", cost: "10.000đ", note: "" }
+            ],
+            race: [
+                { tier: "Up Tộc V1 - V3", cost: "10.000đ", note: "" },
+                { tier: "Gạt Cần", cost: "20.000đ", note: "" },
+                { tier: "Tộc V4 (1 Gear)", cost: "10.000đ", note: "" },
+                { tier: "Tộc V4 (Full Gear)", cost: "30.000đ", note: "" }
+            ]
+        };
+
+        const categoryNames = {
+            level: { title: "Level / Farm Level", icon: "⚡" },
+            leviathan: { title: "Leviathan", icon: "🐉" },
+            ring: { title: "Dungeon Ring", icon: "💍" },
+            spirit: { title: "Dungeon Ring IV / Spirit", icon: "👑" },
+            dragon: { title: "Draco / Dragon", icon: "🔥" },
+            sword: { title: "Sword / Vũ Khí", icon: "⚔️" },
+            race: { title: "Race", icon: "🏁" }
+        };
+
+        let currentData = JSON.parse(localStorage.getItem('zenk_services_data')) || defaultData;
+
+        if (localStorage.getItem('zenk_services_data')) {
+            localStorage.removeItem('zenk_services_data');
+            currentData = defaultData;
+        }
+
+        function renderWeb() {
+            const container = document.getElementById('main-services-container');
+            container.innerHTML = '';
+
+            // Thứ tự hiển thị chuẩn theo ảnh mẫu của bạn
+            const order = ['level', 'leviathan', 'ring', 'spirit', 'dragon', 'sword', 'race'];
+
+            order.forEach(cat => {
+                if(!currentData[cat]) currentData[cat] = [];
+                
+                let cardsHtml = '';
+                currentData[cat].forEach(item => {
+                    cardsHtml += `
+                        <div class="price-card">
+                            <div class="tier">${item.tier}</div>
+                            <div class="cost">${item.cost}</div>
+                            ${item.note ? `<div class="note">${item.note}</div>` : ''}
+                        </div>
+                    `;
+                });
+
+                const itemHtml = `
+                    <div class="accordion-item ${cat}" id="item-${cat}">
+                        <button class="accordion-header" onclick="handleAccordion('item-${cat}')">
+                            <div class="header-title">
+                                <span>${categoryNames[cat].icon}</span> ${categoryNames[cat].title}
+                            </div>
+                            <span class="icon-arrow">▼</span>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="price-grid">
+                                ${cardsHtml || '<div style="color:#64748b; width:100%; text-align:center;">Chưa có gói giá nào.</div>'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += itemHtml;
+            });
+        }
+
+        function handleAccordion(itemId) {
+            const clickedItem = document.getElementById(itemId);
+            const isOpen = clickedItem.classList.contains('active');
+
+            document.querySelectorAll('.accordion-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            if (!isOpen) {
+                clickedItem.classList.add('active');
+            }
+        }
+
+        renderWeb();
+    </script>
+</body>
+</html>
