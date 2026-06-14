@@ -5,6 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>its_zenk cày thuê</title>
     <style>
+        /* --- Màn Hình Chào Kích Hoạt Nhạc Nền --- */
+        #welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0b0f19;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .start-web-btn {
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ffffff;
+            background: #111827;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 0 20px rgba(127, 0, 255, 0.4); /* Glow tím */
+            transition: all 0.3s ease;
+        }
+
+        /* Viền chuyển màu rgb chạy quanh nút vào web */
+        .start-web-btn::before {
+            content: '';
+            position: absolute;
+            top: -3px; left: -3px; right: -3px; bottom: -3px;
+            background: linear-gradient(45deg, #ff007f, #7f00ff, #00f0ff, #ff007f);
+            background-size: 400%;
+            border-radius: 15px;
+            z-index: -1;
+            animation: borderGlow 6s linear infinite;
+        }
+
+        .start-web-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.6); /* Glow xanh */
+        }
+
         /* --- Giao diện tổng thể --- */
         body {
             background-color: #0b0f19;
@@ -18,7 +67,50 @@
             min-height: 100vh;
         }
 
-        /* --- Banner & Avatar --- */
+        /* --- HIỆU ỨNG VIỀN ANIMATION BACKGROUND (MỚI THÊM) --- */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background:
+                repeating-linear-gradient(
+                    120deg,
+                    transparent 0px,
+                    transparent 120px,
+                    rgba(0, 225, 255, 0.08) 130px,
+                    rgba(0, 225, 255, 0.25) 135px,
+                    rgba(0, 225, 255, 0.08) 140px,
+                    transparent 150px,
+                    transparent 300px
+                );
+            animation: moveLines 8s linear infinite;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(0, 225, 255, 0.08),
+                    transparent 70%
+                );
+            pointer-events: none;
+        }
+
+        @keyframes moveLines {
+            from {
+                transform: translateX(-200px) translateY(-100px);
+            }
+            to {
+                transform: translateX(200px) translateY(100px);
+            }
+        }
+
+        /* --- Banner & Avatar với Viền Đổi Màu Hoạt Họa --- */
         .header-container {
             text-align: center;
             padding: 40px 20px;
@@ -31,15 +123,27 @@
             width: 130px;
             height: 130px;
             margin: 0 auto 20px;
+            padding: 4px;
+            border-radius: 16px;
+            background: linear-gradient(45deg, #ff007f, #7f00ff, #00f0ff, #ff007f);
+            background-size: 400%;
+            animation: borderGlow 6s linear infinite;
+            box-shadow: 0 0 25px rgba(127, 0, 255, 0.6);
+        }
+
+        @keyframes borderGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .avatar {
             width: 100%;
             height: 100%;
-            border-radius: 12px; /* Đổi thành bo góc vuông theo ảnh mẫu */
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 25px rgba(59, 130, 246, 0.4);
+            border-radius: 12px;
             object-fit: cover;
+            display: block;
+            background-color: #111827;
         }
 
         .badge {
@@ -53,6 +157,7 @@
             letter-spacing: 2px;
             display: inline-block;
             margin-bottom: 12px;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
         }
 
         h1 {
@@ -78,13 +183,14 @@
             display: inline-block;
             font-size: 13px;
             color: #ffffff;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
         }
         .username-tag span {
             color: #10b981;
             margin-right: 5px;
         }
 
-        /* --- KHU VỰC GIẢM GIÁ DISCORD --- */
+        /* --- Khu Vực Khuyến Mãi --- */
         .discord-promo {
             background: linear-gradient(135deg, #4c1d95, #1e1b4b);
             border: 2px dashed #8b5cf6;
@@ -111,6 +217,7 @@
             padding: 8px 20px;
             border-radius: 6px;
             font-weight: bold;
+            box-shadow: 0 0 15px rgba(88, 101, 242, 0.4);
             transition: all 0.3s ease;
         }
 
@@ -120,7 +227,48 @@
             box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4);
         }
 
-        /* --- Danh sách dịch vụ dạng Động --- */
+        /* --- Khu vực Hỗ trợ hạ tầng --- */
+        .support-container {
+            width: 90%;
+            max-width: 800px;
+            margin: 10px auto 50px auto;
+            text-align: center;
+        }
+
+        .support-box {
+            background: linear-gradient(135deg, #0f172a, #1e1b4b);
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 25px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .support-box p {
+            margin: 0 0 15px 0;
+            font-size: 16px;
+            color: #cbd5e1;
+        }
+
+        .support-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #10b981, #059669);
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 15px;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .support-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.6);
+            filter: brightness(1.1);
+        }
+
+        /* --- Danh sách dịch vụ & Hiệu ứng phát sáng Icon --- */
         .services-list {
             width: 90%;
             max-width: 800px;
@@ -133,10 +281,10 @@
             margin-bottom: 15px;
             overflow: hidden;
             border-left: 5px solid #3b82f6;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        /* Màu viền trái riêng biệt cho từng mục giống như ảnh của bạn */
+        /* Màu viền trái và Glow tương ứng từng loại */
         .accordion-item.level { border-left-color: #3b82f6; }
         .accordion-item.leviathan { border-left-color: #eab308; }
         .accordion-item.ring { border-left-color: #a855f7; }
@@ -144,6 +292,14 @@
         .accordion-item.dragon { border-left-color: #ec4899; }
         .accordion-item.sword { border-left-color: #f97316; }
         .accordion-item.race { border-left-color: #10b981; }
+
+        .accordion-item.level:hover { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+        .accordion-item.leviathan:hover { box-shadow: 0 0 20px rgba(234, 179, 8, 0.3); }
+        .accordion-item.ring:hover { box-shadow: 0 0 20px rgba(168, 85, 247, 0.3); }
+        .accordion-item.spirit:hover { box-shadow: 0 0 20px rgba(6, 182, 212, 0.3); }
+        .accordion-item.dragon:hover { box-shadow: 0 0 20px rgba(236, 72, 153, 0.3); }
+        .accordion-item.sword:hover { box-shadow: 0 0 20px rgba(249, 115, 22, 0.3); }
+        .accordion-item.race:hover { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
 
         .accordion-header {
             width: 100%;
@@ -158,16 +314,28 @@
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
+            transition: background-color 0.2s ease;
         }
 
         .accordion-header:hover { background-color: #1f2937; }
         .header-title { display: flex; align-items: center; gap: 15px; }
-        .icon-arrow { font-size: 12px; transition: transform 0.3s ease; color: #6b7280; }
+        
+        .icon-glow {
+            display: inline-block;
+            color: rgba(255, 255, 255, 0.6);
+            transition: transform 0.3s ease;
+        }
+
+        .icon-arrow { 
+            font-size: 12px; 
+            transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1); 
+            color: #6b7280; 
+        }
 
         .accordion-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: max-height 0.38s cubic-bezier(0.4, 0, 0.2, 1);
             background-color: #0f172a;
         }
 
@@ -185,17 +353,29 @@
             border: 1px solid #334155;
             text-align: center;
             position: relative;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        .price-card:hover {
+            transform: translateY(-4px);
+            border-color: #4b5563;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
 
         .price-card .tier { font-size: 14px; color: #94a3b8; margin-bottom: 8px; font-weight: 500; }
-        .price-card .cost { font-size: 20px; font-weight: bold; color: #f59e0b; }
+        .price-card .cost { font-size: 20px; font-weight: bold; color: #f59e0b; text-shadow: 0 0 10px rgba(245, 158, 11, 0.4); }
         .price-card .note { font-size: 11px; color: #64748b; margin-top: 5px; }
 
-        .accordion-item.active .accordion-content { max-height: 1000px; }
-        .accordion-item.active .icon-arrow { transform: rotate(180deg); }
+        .accordion-item.active .icon-arrow { transform: rotate(180deg); color: #fff; }
     </style>
 </head>
 <body>
+
+    <div id="welcome-overlay">
+        <button class="start-web-btn" onclick="startWebsite()">Vào Xem Bảng Giá ✨</button>
+    </div>
+
+    <audio id="bg-music" src="AQMbjy3W4ql7zhH5U-E_30DEBj5CtmsqUzRqf6nYUn-HzqF0_Ki_wt31WZb02N8WhLF6Ke2Gm07RVWaecqlwSfTOuOgBqwg-2jjO.mp3" loop></audio>
 
     <div class="header-container">
         <div class="avatar-wrapper">
@@ -215,7 +395,30 @@
     <div class="services-list" id="main-services-container">
     </div>
 
+    <div class="support-container">
+        <div class="support-box">
+            <p>💬 Bạn cần tư vấn thêm hoặc yêu cầu dịch vụ riêng?</p>
+            <a href="https://discord.gg/DyqS5U3E" target="_blank" class="support-btn">Ib Để Được Hỗ Trợ Thêm</a>
+        </div>
+    </div>
+
     <script>
+        // Hàm kích hoạt nhạc và ẩn màn hình chào
+        function startWebsite() {
+            const music = document.getElementById('bg-music');
+            const overlay = document.getElementById('welcome-overlay');
+            
+            // Phát nhạc
+            music.play().catch(error => console.log("Lỗi phát nhạc:", error));
+            
+            // Ẩn màn hình chào
+            overlay.style.opacity = '0';
+            overlay.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 500);
+        }
+
         const defaultData = {
             level: [
                 { tier: "Level 1 – 700", cost: "10.000đ", note: "" },
@@ -274,18 +477,12 @@
             race: { title: "Race", icon: "🏁" }
         };
 
-        let currentData = JSON.parse(localStorage.getItem('zenk_services_data')) || defaultData;
-
-        if (localStorage.getItem('zenk_services_data')) {
-            localStorage.removeItem('zenk_services_data');
-            currentData = defaultData;
-        }
+        let currentData = defaultData;
 
         function renderWeb() {
             const container = document.getElementById('main-services-container');
             container.innerHTML = '';
 
-            // Thứ tự hiển thị chuẩn theo ảnh mẫu của bạn
             const order = ['level', 'leviathan', 'ring', 'spirit', 'dragon', 'sword', 'race'];
 
             order.forEach(cat => {
@@ -306,7 +503,7 @@
                     <div class="accordion-item ${cat}" id="item-${cat}">
                         <button class="accordion-header" onclick="handleAccordion('item-${cat}')">
                             <div class="header-title">
-                                <span>${categoryNames[cat].icon}</span> ${categoryNames[cat].title}
+                                <span class="icon-glow">${categoryNames[cat].icon}</span> ${categoryNames[cat].title}
                             </div>
                             <span class="icon-arrow">▼</span>
                         </button>
@@ -323,14 +520,17 @@
 
         function handleAccordion(itemId) {
             const clickedItem = document.getElementById(itemId);
+            const content = clickedItem.querySelector('.accordion-content');
             const isOpen = clickedItem.classList.contains('active');
 
             document.querySelectorAll('.accordion-item').forEach(item => {
                 item.classList.remove('active');
+                item.querySelector('.accordion-content').style.maxHeight = null;
             });
 
             if (!isOpen) {
                 clickedItem.classList.add('active');
+                content.style.maxHeight = content.scrollHeight + "px";
             }
         }
 
