@@ -55,7 +55,7 @@
 
         /* --- Giao diện tổng thể --- */
         body {
-            background-color: #0b0f19;
+            background-color: #0b111e;
             color: #ffffff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
@@ -65,69 +65,133 @@
             align-items: center;
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* --- GIỮ NỀN CŨ NGUYÊN BẢN - TỐI ƯU CHỐNG LAG --- */
+        /* --- BACKGROUND PHẦN DƯỚI: SỌC LƯỚI GRID --- */
         body::before {
             content: "";
             position: fixed;
             inset: 0;
-            z-index: -2;
-            /* Phông nền sọc gradient gốc của bạn */
-            background: repeating-linear-gradient(
-                120deg,
-                transparent 0px,
-                transparent 120px,
-                rgba(0, 225, 255, 0.08) 130px,
-                rgba(0, 225, 255, 0.25) 135px,
-                rgba(0, 225, 255, 0.08) 140px,
-                transparent 150px,
-                transparent 300px
-            );
-            background-size: 600px 600px; /* Định kích cỡ nền lặp lại để chuyển động mượt */
-            animation: moveLines 25s linear infinite; /* Chạy chậm lại một chút để mobile xử lý mượt hơn */
-            will-change: background-position; /* Ép GPU xử lý tăng tốc phần cứng */
-            transform: translateZ(0);
+            z-index: -3;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: center top;
         }
 
+        /* Hiệu ứng tâm sáng làm nổi bật nội dung ở giữa */
         body::after {
             content: "";
             position: fixed;
             inset: 0;
-            z-index: -1;
-            background: radial-gradient(circle at center, rgba(0, 225, 255, 0.08), transparent 70%);
+            z-index: -2;
+            background: radial-gradient(circle at 50% 30%, rgba(59, 130, 246, 0.12), transparent 60%);
             pointer-events: none;
         }
 
-        /* Thay thế transform dịch khối bằng trượt background-position giúp chống lag giật hoàn toàn */
-        @keyframes moveLines {
-            from {
-                background-position: 0 0;
+        /* --- BACKGROUND PHẦN TRÊN: THANH QUÉT LA-ZE XANH NHẠT --- */
+        .scan-line-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .scan-line-bg::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 80px; /* Độ rộng của dải sáng la-ze */
+            background: linear-gradient(
+                to bottom,
+                transparent,
+                rgba(0, 240, 255, 0.12) 50%,
+                transparent
+            );
+            /* Tạo một vệt sáng mỏng xanh nhạt ở giữa dải */
+            border-bottom: 2px solid rgba(0, 240, 255, 0.25);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+            top: -100px;
+            animation: laserScan 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        @keyframes laserScan {
+            0% {
+                top: -100px;
+                opacity: 0;
             }
-            to {
-                background-position: 600px 600px;
+            5% { opacity: 1; }
+            95% { opacity: 1; }
+            100% {
+                top: 100vh;
+                opacity: 0;
+            }
+        }
+
+        /* --- HIỆU ỨNG BỤI BAY (PARTICLES) NỀN --- */
+        .particles-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0;
+            animation: floatUp infinite linear;
+        }
+
+        .particle:nth-child(1) { width: 3px; height: 3px; left: 10%; bottom: -10px; animation-duration: 18s; animation-delay: 1s; background: #3b82f6; }
+        .particle:nth-child(2) { width: 2px; height: 2px; left: 25%; bottom: -10px; animation-duration: 24s; animation-delay: 5s; background: #eab308; }
+        .particle:nth-child(3) { width: 4px; height: 4px; left: 45%; bottom: -10px; animation-duration: 15s; animation-delay: 0s; background: #fff; }
+        .particle:nth-child(4) { width: 2px; height: 2px; left: 65%; bottom: -10px; animation-duration: 22s; animation-delay: 3s; background: #a855f7; }
+        .particle:nth-child(5) { width: 3px; height: 3px; left: 85%; bottom: -10px; animation-duration: 19s; animation-delay: 7s; background: #06b6d4; }
+        .particle:nth-child(6) { width: 2px; height: 2px; left: 90%; bottom: -10px; animation-duration: 26s; animation-delay: 2s; background: #fff; }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(0.5);
+                opacity: 0;
+            }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% {
+                transform: translateY(-105vh) scale(1.2);
+                opacity: 0;
             }
         }
 
         /* --- Banner & Avatar --- */
         .header-container {
             text-align: center;
-            padding: 40px 20px;
+            padding: 50px 20px 30px;
             width: 100%;
             max-width: 800px;
         }
 
         .avatar-wrapper {
             position: relative;
-            width: 130px;
-            height: 130px;
+            width: 120px;
+            height: 120px;
             margin: 0 auto 20px;
-            padding: 4px;
-            border-radius: 16px;
-            background: linear-gradient(45deg, #ff007f, #7f00ff, #00f0ff, #ff007f);
+            padding: 3px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #3b82f6, #a855f7, #06b6d4, #3b82f6);
             background-size: 400%;
             animation: borderGlow 6s linear infinite;
-            box-shadow: 0 0 25px rgba(127, 0, 255, 0.6);
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.5);
         }
 
         @keyframes borderGlow {
@@ -139,73 +203,72 @@
         .avatar {
             width: 100%;
             height: 100%;
-            border-radius: 12px;
+            border-radius: 50%;
             object-fit: cover;
             display: block;
             background-color: #111827;
         }
 
         .badge {
-            background-color: #1e293b;
+            background-color: rgba(30, 41, 59, 0.7);
             border: 1px solid #3b82f6;
             color: #3b82f6;
             padding: 5px 16px;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 11px;
             font-weight: bold;
             letter-spacing: 2px;
             display: inline-block;
-            margin-bottom: 12px;
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+            margin-bottom: 15px;
+            backdrop-filter: blur(4px);
         }
 
         h1 {
-            font-size: 42px;
+            font-size: 40px;
             margin: 5px 0;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             font-weight: 800;
             color: #ffffff;
         }
 
         .sub-features {
-            color: #9ca3af;
-            font-size: 14px;
+            color: #94a3b8;
+            font-size: 13px;
             margin: 8px 0 15px 0;
+            letter-spacing: 0.5px;
         }
 
         .username-tag {
-            background-color: #111827;
+            background-color: rgba(17, 24, 39, 0.8);
             border: 1px solid #334155;
-            padding: 6px 18px;
+            padding: 6px 20px;
             border-radius: 20px;
             display: inline-block;
             font-size: 13px;
             color: #ffffff;
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
         }
         .username-tag span {
             color: #10b981;
-            margin-right: 5px;
+            margin-right: 6px;
         }
 
         /* --- Khu Vực Khuyến Mãi --- */
         .discord-promo {
-            background: linear-gradient(135deg, #4c1d95, #1e1b4b);
-            border: 2px dashed #8b5cf6;
+            background: linear-gradient(135deg, rgba(76, 29, 149, 0.4), rgba(30, 27, 75, 0.4));
+            border: 1px dashed #8b5cf6;
             border-radius: 12px;
             padding: 15px;
             margin: 10px auto 30px;
             max-width: 550px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
+            backdrop-filter: blur(4px);
             width: 90%;
         }
 
         .discord-promo p {
             margin: 0 0 10px 0;
             font-size: 15px;
-            font-weight: 500;
         }
 
         .discord-btn {
@@ -216,14 +279,12 @@
             padding: 8px 20px;
             border-radius: 6px;
             font-weight: bold;
-            box-shadow: 0 0 15px rgba(88, 101, 242, 0.4);
             transition: all 0.3s ease;
         }
 
         .discord-btn:hover {
             background-color: #4752c4;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4);
         }
 
         /* --- Khu vực Hỗ trợ --- */
@@ -235,11 +296,11 @@
         }
 
         .support-box {
-            background: linear-gradient(135deg, #0f172a, #1e1b4b);
-            border: 1px solid #334155;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid #223047;
             border-radius: 12px;
             padding: 25px 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(6px);
         }
 
         .support-box p {
@@ -257,13 +318,11 @@
             border-radius: 8px;
             font-weight: bold;
             font-size: 15px;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
             transition: all 0.3s ease;
         }
 
         .support-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 25px rgba(16, 185, 129, 0.6);
+            transform: translateY(-2px);
             filter: brightness(1.1);
         }
 
@@ -271,16 +330,18 @@
         .services-list {
             width: 90%;
             max-width: 800px;
-            padding-bottom: 40px;
+            padding-bottom: 20px;
         }
 
         .accordion-item {
-            background-color: #111827;
+            background-color: rgba(17, 24, 39, 0.75);
             border-radius: 12px;
             margin-bottom: 15px;
             overflow: hidden;
-            border-left: 5px solid #3b82f6;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #1e293b;
+            border-left: 4px solid #3b82f6;
+            backdrop-filter: blur(6px);
+            transition: all 0.3s ease;
         }
         
         .accordion-item.level { border-left-color: #3b82f6; }
@@ -291,91 +352,81 @@
         .accordion-item.sword { border-left-color: #f97316; }
         .accordion-item.race { border-left-color: #10b981; }
 
-        .accordion-item.level:hover { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
-        .accordion-item.leviathan:hover { box-shadow: 0 0 20px rgba(234, 179, 8, 0.3); }
-        .accordion-item.ring:hover { box-shadow: 0 0 20px rgba(168, 85, 247, 0.3); }
-        .accordion-item.spirit:hover { box-shadow: 0 0 20px rgba(6, 182, 212, 0.3); }
-        .accordion-item.dragon:hover { box-shadow: 0 0 20px rgba(236, 72, 153, 0.3); }
-        .accordion-item.sword:hover { box-shadow: 0 0 20px rgba(249, 115, 22, 0.3); }
-        .accordion-item.race:hover { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
-
         .accordion-header {
             width: 100%;
             background: none;
             border: none;
-            padding: 20px;
+            padding: 18px 20px;
             color: white;
             text-align: left;
-            font-size: 18px;
-            font-weight: bold;
+            font-size: 17px;
+            font-weight: 600;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            transition: background-color 0.2s ease;
         }
 
-        .accordion-header:hover { background-color: #1f2937; }
-        .header-title { display: flex; align-items: center; gap: 15px; }
+        .accordion-header:hover { background-color: rgba(31, 41, 55, 0.4); }
+        .header-title { display: flex; align-items: center; gap: 12px; }
         
-        /* Hiệu ứng Icon bập bênh mượt mà */
-        .icon-glow {
-            display: inline-block;
-            font-size: 20px;
-            text-shadow: 0 0 10px rgba(0, 225, 255, 0.8);
-            animation: iconFloat 3s ease-in-out infinite alternate;
-            will-change: transform;
-        }
-
-        @keyframes iconFloat {
-            0% { transform: rotate(-4deg) translateY(0); }
-            100% { transform: rotate(4deg) translateY(-1px); }
-        }
+        .icon-glow { display: inline-block; font-size: 18px; }
 
         .icon-arrow { 
             font-size: 12px; 
-            transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1); 
+            transition: transform 0.3s ease; 
             color: #6b7280; 
+            background: rgba(255,255,255,0.05);
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .accordion-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.38s cubic-bezier(0.4, 0, 0.2, 1);
-            background-color: #0f172a;
+            transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: rgba(10, 15, 26, 0.5);
         }
 
         .price-grid {
             padding: 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
         }
 
         .price-card {
-            background-color: #1e293b;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #334155;
-            text-align: center;
-            position: relative;
-            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            background-color: rgba(30, 41, 59, 0.45);
+            padding: 18px 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            text-align: left;
+            transition: all 0.25s ease;
         }
 
-        .price-card:hover {
-            transform: translateY(-4px);
-            border-color: #4b5563;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        .price-card .tier { font-size: 14px; color: #94a3b8; margin-bottom: 8px; font-weight: 500; }
-        .price-card .cost { font-size: 20px; font-weight: bold; color: #f59e0b; text-shadow: 0 0 10px rgba(245, 158, 11, 0.4); }
+        .price-card .tier { font-size: 13px; color: #94a3b8; margin-bottom: 6px; }
+        .price-card .cost { font-size: 19px; font-weight: bold; color: #f59e0b; }
         .price-card .note { font-size: 11px; color: #64748b; margin-top: 5px; }
 
-        .accordion-item.active .icon-arrow { transform: rotate(180deg); color: #fff; }
+        .accordion-item.active .icon-arrow { transform: rotate(180deg); color: #fff; background: #3b82f6; }
     </style>
 </head>
 <body>
+
+    <div class="scan-line-bg"></div>
+
+    <div class="particles-bg">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
 
     <div id="welcome-overlay">
         <button class="start-web-btn" onclick="startWebsite()">Vào Xem Bảng Giá ✨</button>
