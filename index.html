@@ -67,17 +67,27 @@
             overflow-x: hidden;
         }
 
-        /* --- FIX LAG HOÀN TOÀN: DÙNG SVG ĐƯỢC MÃ HÓA CHO NỀN --- */
+        /* --- GIỮ NỀN CŨ NGUYÊN BẢN - TỐI ƯU CHỐNG LAG --- */
         body::before {
             content: "";
             position: fixed;
             inset: 0;
             z-index: -2;
-            /* Thay thế gradient bằng SVG thuần, giúp điện thoại load mượt tuyệt đối không khựng */
-            background-image: url("data:image/svg+xml,%3Csvg width='180' height='180' viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 180L180 0M-45 180L135 -45M45 225L225 45' stroke='rgba(0, 225, 255, 0.12)' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E");
-            background-size: 180px 180px;
-            animation: moveLines 12s linear infinite;
-            will-change: background-position;
+            /* Phông nền sọc gradient gốc của bạn */
+            background: repeating-linear-gradient(
+                120deg,
+                transparent 0px,
+                transparent 120px,
+                rgba(0, 225, 255, 0.08) 130px,
+                rgba(0, 225, 255, 0.25) 135px,
+                rgba(0, 225, 255, 0.08) 140px,
+                transparent 150px,
+                transparent 300px
+            );
+            background-size: 600px 600px; /* Định kích cỡ nền lặp lại để chuyển động mượt */
+            animation: moveLines 25s linear infinite; /* Chạy chậm lại một chút để mobile xử lý mượt hơn */
+            will-change: background-position; /* Ép GPU xử lý tăng tốc phần cứng */
+            transform: translateZ(0);
         }
 
         body::after {
@@ -85,17 +95,17 @@
             position: fixed;
             inset: 0;
             z-index: -1;
-            background: radial-gradient(circle at center, rgba(0, 225, 255, 0.05), transparent 75%);
+            background: radial-gradient(circle at center, rgba(0, 225, 255, 0.08), transparent 70%);
             pointer-events: none;
         }
 
-        /* Điểm kết thúc khớp chính xác 100% với kích thước ảnh, loại bỏ hoàn toàn hiện tượng khựng */
+        /* Thay thế transform dịch khối bằng trượt background-position giúp chống lag giật hoàn toàn */
         @keyframes moveLines {
             from {
                 background-position: 0 0;
             }
             to {
-                background-position: 180px 180px;
+                background-position: 600px 600px;
             }
         }
 
@@ -308,7 +318,7 @@
         .accordion-header:hover { background-color: #1f2937; }
         .header-title { display: flex; align-items: center; gap: 15px; }
         
-        /* Hiệu ứng Icon bập bênh siêu mượt */
+        /* Hiệu ứng Icon bập bênh mượt mà */
         .icon-glow {
             display: inline-block;
             font-size: 20px;
