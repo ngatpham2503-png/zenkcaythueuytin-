@@ -33,11 +33,10 @@
             border-radius: 12px;
             cursor: pointer;
             position: relative;
-            box-shadow: 0 0 20px rgba(127, 0, 255, 0.4); /* Glow tím */
+            box-shadow: 0 0 20px rgba(127, 0, 255, 0.4);
             transition: all 0.3s ease;
         }
 
-        /* Viền chuyển màu rgb chạy quanh nút vào web */
         .start-web-btn::before {
             content: '';
             position: absolute;
@@ -51,7 +50,7 @@
 
         .start-web-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.6); /* Glow xanh */
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.6);
         }
 
         /* --- Giao diện tổng thể --- */
@@ -65,9 +64,10 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* --- HIỆU ỨNG VIỀN ANIMATION BACKGROUND --- */
+        /* --- TỐI ƯU BACKGROUND CHỐNG LAG CHO ĐIỆN THOẠI --- */
         body::before {
             content: "";
             position: fixed;
@@ -78,13 +78,16 @@
                     120deg,
                     transparent 0px,
                     transparent 120px,
-                    rgba(0, 225, 255, 0.08) 130px,
-                    rgba(0, 225, 255, 0.25) 135px,
-                    rgba(0, 225, 255, 0.08) 140px,
+                    rgba(0, 225, 255, 0.06) 130px,
+                    rgba(0, 225, 255, 0.18) 135px,
+                    rgba(0, 225, 255, 0.06) 140px,
                     transparent 150px,
                     transparent 300px
                 );
-            animation: moveLines 8s linear infinite;
+            background-size: 600px 600px;
+            animation: moveLines 20s linear infinite;
+            will-change: background-position; /* Ép phần cứng GPU xử lý */
+            transform: translate3d(0,0,0); /* Kích hoạt tăng tốc phần cứng */
         }
 
         body::after {
@@ -95,7 +98,7 @@
             background:
                 radial-gradient(
                     circle at center,
-                    rgba(0, 225, 255, 0.08),
+                    rgba(0, 225, 255, 0.06),
                     transparent 70%
                 );
             pointer-events: none;
@@ -103,14 +106,14 @@
 
         @keyframes moveLines {
             from {
-                transform: translateX(-200px) translateY(-100px);
+                background-position: 0 0;
             }
             to {
-                transform: translateX(200px) translateY(100px);
+                background-position: 600px 600px;
             }
         }
 
-        /* --- Banner & Avatar với Viền Đổi Màu Hoạt Họa --- */
+        /* --- Banner & Avatar --- */
         .header-container {
             text-align: center;
             padding: 40px 20px;
@@ -227,7 +230,7 @@
             box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4);
         }
 
-        /* --- Khu vực Hỗ trợ hạ tầng --- */
+        /* --- Khu vực Hỗ trợ --- */
         .support-container {
             width: 90%;
             max-width: 800px;
@@ -268,7 +271,7 @@
             filter: brightness(1.1);
         }
 
-        /* --- Danh sách dịch vụ & Hiệu ứng phát sáng Icon --- */
+        /* --- Danh sách dịch vụ & Icon Animation --- */
         .services-list {
             width: 90%;
             max-width: 800px;
@@ -284,7 +287,6 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        /* Màu viền trái và Glow tương ứng từng loại */
         .accordion-item.level { border-left-color: #3b82f6; }
         .accordion-item.leviathan { border-left-color: #eab308; }
         .accordion-item.ring { border-left-color: #a855f7; }
@@ -320,22 +322,21 @@
         .accordion-header:hover { background-color: #1f2937; }
         .header-title { display: flex; align-items: center; gap: 15px; }
         
-        /* --- HIỆU ỨNG ANIMATION CHO ICON (MỚI THÊM) --- */
+        /* Animation icon nhẹ nhàng, mượt mà hơn */
         .icon-glow {
             display: inline-block;
             font-size: 20px;
             text-shadow: 0 0 10px rgba(0, 225, 255, 0.8);
-            animation: iconFloat 2.5s ease-in-out infinite alternate;
+            animation: iconFloat 3s ease-in-out infinite alternate;
+            will-change: transform;
         }
 
         @keyframes iconFloat {
             0% {
-                transform: translateY(0) rotate(-5deg);
-                filter: drop-shadow(0 0 2px rgba(0, 225, 255, 0.6));
+                transform: translateY(0) rotate(-3deg);
             }
             100% {
-                transform: translateY(-3px) rotate(5deg);
-                filter: drop-shadow(0 0 12px rgba(0, 225, 255, 0.9));
+                transform: translateY(-2px) rotate(3deg);
             }
         }
 
@@ -416,15 +417,10 @@
     </div>
 
     <script>
-        // Hàm kích hoạt nhạc và ẩn màn hình chào
         function startWebsite() {
             const music = document.getElementById('bg-music');
             const overlay = document.getElementById('welcome-overlay');
-            
-            // Phát nhạc
             music.play().catch(error => console.log("Lỗi phát nhạc:", error));
-            
-            // Ẩn màn hình chào
             overlay.style.opacity = '0';
             overlay.style.transform = 'scale(1.1)';
             setTimeout(() => {
@@ -495,12 +491,10 @@
         function renderWeb() {
             const container = document.getElementById('main-services-container');
             container.innerHTML = '';
-
             const order = ['level', 'leviathan', 'ring', 'spirit', 'dragon', 'sword', 'race'];
 
             order.forEach(cat => {
                 if(!currentData[cat]) currentData[cat] = [];
-                
                 let cardsHtml = '';
                 currentData[cat].forEach(item => {
                     cardsHtml += `
