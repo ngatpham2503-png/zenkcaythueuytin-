@@ -67,7 +67,7 @@
             min-height: 100vh;
         }
 
-        /* --- HIỆU ỨNG VIỀN ANIMATION BACKGROUND (MỚI THÊM) --- */
+        /* --- HIỆU ỨNG VIỀN ANIMATION BACKGROUND --- */
         body::before {
             content: "";
             position: fixed;
@@ -320,10 +320,23 @@
         .accordion-header:hover { background-color: #1f2937; }
         .header-title { display: flex; align-items: center; gap: 15px; }
         
+        /* --- HIỆU ỨNG ANIMATION CHO ICON (MỚI THÊM) --- */
         .icon-glow {
             display: inline-block;
-            color: rgba(255, 255, 255, 0.6);
-            transition: transform 0.3s ease;
+            font-size: 20px;
+            text-shadow: 0 0 10px rgba(0, 225, 255, 0.8);
+            animation: iconFloat 2.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes iconFloat {
+            0% {
+                transform: translateY(0) rotate(-5deg);
+                filter: drop-shadow(0 0 2px rgba(0, 225, 255, 0.6));
+            }
+            100% {
+                transform: translateY(-3px) rotate(5deg);
+                filter: drop-shadow(0 0 12px rgba(0, 225, 255, 0.9));
+            }
         }
 
         .icon-arrow { 
