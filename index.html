@@ -166,7 +166,7 @@
             100% { transform: translateY(-105vh) scale(1.2); opacity: 0; }
         }
 
-        /* --- Banner & Avatar với Thanh Sáng Xanh Nhạt Chạy Qua --- */
+        /* --- Banner & Avatar --- */
         .header-container {
             text-align: center;
             padding: 50px 20px 30px;
@@ -338,7 +338,6 @@
 
         .accordion-header:hover { background-color: rgba(31, 41, 55, 0.4); }
         .header-title { display: flex; align-items: center; gap: 12px; }
-        
         .icon-glow { display: inline-block; font-size: 18px; }
 
         .icon-arrow { 
@@ -395,6 +394,7 @@
             backdrop-filter: blur(6px);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
             text-align: center;
+            box-sizing: border-box;
         }
 
         .rating-container h2 {
@@ -405,7 +405,6 @@
             color: #ffffff;
         }
 
-        /* Logic Chọn Sao Với CSS */
         .star-rating {
             display: flex;
             flex-direction: row-reverse;
@@ -413,9 +412,7 @@
             margin-bottom: 20px;
         }
 
-        .star-rating input {
-            display: none;
-        }
+        .star-rating input { display: none; }
 
         .star-rating label {
             font-size: 35px;
@@ -432,9 +429,7 @@
             text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
         }
 
-        .star-rating label:active {
-            transform: scale(0.9);
-        }
+        .star-rating label:active { transform: scale(0.9); }
 
         .rating-form input[type="text"],
         .rating-form textarea {
@@ -453,9 +448,7 @@
         }
 
         .rating-form input[type="text"]:focus,
-        .rating-form textarea:focus {
-            border-color: #3b82f6;
-        }
+        .rating-form textarea:focus { border-color: #3b82f6; }
 
         .submit-rating-btn {
             background: linear-gradient(90deg, #3b82f6, #1d4ed8);
@@ -474,6 +467,39 @@
             transform: translateY(-2px);
             box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
         }
+
+        /* KHU VỰC HIỂN THỊ CÁC BÌNH LUẬN ĐÃ ĐÁNH GIÁ */
+        .reviews-display-list {
+            margin-top: 25px;
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        /* Tùy chỉnh thanh cuộn cho mượt */
+        .reviews-display-list::-webkit-scrollbar { width: 6px; }
+        .reviews-display-list::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+
+        .review-card-item {
+            background: rgba(10, 15, 26, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .review-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .review-card-name { font-weight: bold; font-size: 14px; color: #60a5fa; }
+        .review-card-stars { color: #fbbf24; font-size: 13px; letter-spacing: 1px; }
+        .review-card-msg { font-size: 13px; color: #cbd5e1; word-break: break-word; line-height: 1.4; }
+        .no-review-text { text-align: center; color: #64748b; font-size: 13px; padding: 15px 0; }
 
         /* --- Khu Vực Mã QR Thanh Toán --- */
         .payment-container {
@@ -601,9 +627,12 @@
                 <label for="star1" title="1 sao">★</label>
             </div>
             <input type="text" id="reviewerName" placeholder="Tên của bạn hoặc Tên Discord..." required>
-            <textarea id="reviewerMessage" rows="3" placeholder="Lời nhắn hoặc góp ý cho mình (không bắt buộc)..."></textarea>
+            <textarea id="reviewerMessage" rows="2" placeholder="Lời nhắn hoặc góp ý cho mình (không bắt buộc)..."></textarea>
             <button type="submit" class="submit-rating-btn">Gửi Đánh Giá</button>
         </form>
+
+        <div class="reviews-display-list" id="reviewsContainer">
+            </div>
     </div>
 
     <div class="payment-container">
@@ -627,17 +656,58 @@
             music.play().catch(error => console.log("Lỗi phát nhạc:", error));
             overlay.style.opacity = '0';
             overlay.style.transform = 'scale(1.1)';
-            setTimeout(() => {
-                overlay.style.display = 'none';
-            }, 500);
+            setTimeout(() => { overlay.style.display = 'none'; }, 500);
         }
 
-        // Hàm xử lý khi khách bấm gửi đánh giá
+        // Lấy dữ liệu đánh giá từ bộ nhớ trình duyệt, nếu chưa có ai đánh giá thì mảng ban đầu sẽ TRỐNG HOÀN TOÀN []
+        let reviewsList = JSON.parse(localStorage.getItem('zenk_reviews')) || [];
+
+        // Hàm vẽ danh sách đánh giá ra màn hình
+        function renderReviews() {
+            const container = document.getElementById('reviewsContainer');
+            container.innerHTML = '';
+            
+            // Nếu không có bất kỳ đánh giá nào, hiện dòng chữ thông báo ngắn
+            if (reviewsList.length === 0) {
+                container.innerHTML = '<div class="no-review-text">Chưa có đánh giá nào. Hãy là người đầu tiên để lại ý kiến nhé!</div>';
+                return;
+            }
+
+            // Đảo ngược mảng để cái nào đánh giá mới nhất sẽ trồi lên trên cùng
+            [...reviewsList].reverse().forEach(item => {
+                let starString = '★'.repeat(item.stars) + '☆'.repeat(5 - item.stars);
+                container.innerHTML += `
+                    <div class="review-card-item">
+                        <div class="review-card-header">
+                            <span class="review-card-name">👤 ${item.name}</span>
+                            <span class="review-card-stars">${starString}</span>
+                        </div>
+                        <div class="review-card-msg">${item.msg ? item.msg : 'Đã chấm ' + item.stars + ' sao!'}</div>
+                    </div>
+                `;
+            });
+        }
+
+        // Hàm xử lý khi khách bấm nút "Gửi Đánh Giá"
         function sendReview(event) {
             event.preventDefault();
-            const stars = document.querySelector('input[name="user_stars"]:checked').value;
+            const stars = parseInt(document.querySelector('input[name="user_stars"]:checked').value);
             const name = document.getElementById('reviewerName').value;
-            alert(`Cảm ơn ${name} đã đánh giá ${stars} sao cho its_zenk nhé! 🎉`);
+            const msg = document.getElementById('reviewerMessage').value;
+
+            // Tạo object đánh giá mới
+            const newReview = { name: name, stars: stars, msg: msg };
+            
+            // Lưu vào mảng chung
+            reviewsList.push(newReview);
+            
+            // Lưu đè lên bộ nhớ trình duyệt LocalStorage
+            localStorage.setItem('zenk_reviews', JSON.stringify(reviewsList));
+            
+            // Cập nhật lại giao diện ngay tức thì để hiển thị đánh giá vừa nhập
+            renderReviews();
+            
+            alert(`Cảm ơn ${name} đã gửi đánh giá thành công! 🎉`);
             document.getElementById('reviewForm').reset();
         }
 
@@ -699,17 +769,14 @@
             race: { title: "Race", icon: "🏁" }
         };
 
-        let currentData = defaultData;
-
         function renderWeb() {
             const container = document.getElementById('main-services-container');
             container.innerHTML = '';
             const order = ['level', 'leviathan', 'ring', 'spirit', 'dragon', 'sword', 'race'];
 
             order.forEach(cat => {
-                if(!currentData[cat]) currentData[cat] = [];
                 let cardsHtml = '';
-                currentData[cat].forEach(item => {
+                defaultData[cat].forEach(item => {
                     cardsHtml += `
                         <div class="price-card">
                             <div class="tier">${item.tier}</div>
@@ -729,7 +796,7 @@
                         </button>
                         <div class="accordion-content">
                             <div class="price-grid">
-                                ${cardsHtml || '<div style="color:#64748b; width:100%; text-align:center;">Chưa có gói giá nào.</div>'}
+                                ${cardsHtml}
                             </div>
                         </div>
                     </div>
@@ -754,7 +821,9 @@
             }
         }
 
+        // Chạy khởi tạo giao diện lúc vào trang
         renderWeb();
+        renderReviews();
     </script>
 </body>
 </html>
