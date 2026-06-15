@@ -382,7 +382,7 @@
 
         .accordion-item.active .icon-arrow { transform: rotate(180deg); color: #fff; background: #3b82f6; }
 
-        /* --- KHU VỰC ĐÁNH GIÁ ĐỘNG (FORM CHẤM SAO) --- */
+        /* --- KHU VỰC GỬI NHẬN XÉT --- */
         .rating-container {
             width: 90%;
             max-width: 500px;
@@ -399,7 +399,7 @@
 
         .rating-container h2 {
             font-size: 18px;
-            margin: 0 0 15px 0;
+            margin: 0 0 20px 0;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             color: #ffffff;
@@ -458,6 +458,7 @@
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
+            width: 100%;
             font-size: 14px;
             transition: all 0.3s ease;
             box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
@@ -467,39 +468,11 @@
             transform: translateY(-2px);
             box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
         }
-
-        /* KHU VỰC HIỂN THỊ CÁC BÌNH LUẬN ĐÃ ĐÁNH GIÁ */
-        .reviews-display-list {
-            margin-top: 25px;
-            text-align: left;
-            max-height: 300px;
-            overflow-y: auto;
-            padding-right: 5px;
+        .submit-rating-btn:disabled {
+            background: #475569;
+            cursor: not-allowed;
+            box-shadow: none;
         }
-
-        /* Tùy chỉnh thanh cuộn cho mượt */
-        .reviews-display-list::-webkit-scrollbar { width: 6px; }
-        .reviews-display-list::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-
-        .review-card-item {
-            background: rgba(10, 15, 26, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-
-        .review-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 5px;
-        }
-
-        .review-card-name { font-weight: bold; font-size: 14px; color: #60a5fa; }
-        .review-card-stars { color: #fbbf24; font-size: 13px; letter-spacing: 1px; }
-        .review-card-msg { font-size: 13px; color: #cbd5e1; word-break: break-word; line-height: 1.4; }
-        .no-review-text { text-align: center; color: #64748b; font-size: 13px; padding: 15px 0; }
 
         /* --- Khu Vực Mã QR Thanh Toán --- */
         .payment-container {
@@ -612,7 +585,7 @@
     <div class="services-list" id="main-services-container"></div>
 
     <div class="rating-container">
-        <h2>⭐ Đánh giá dịch vụ của mình nhé ⭐</h2>
+        <h2>⭐ Đánh giá dịch vụ ⭐</h2>
         <form class="rating-form" id="reviewForm" onsubmit="sendReview(event)">
             <div class="star-rating">
                 <input type="radio" id="star5" name="user_stars" value="5" required>
@@ -628,11 +601,8 @@
             </div>
             <input type="text" id="reviewerName" placeholder="Tên của bạn hoặc Tên Discord..." required>
             <textarea id="reviewerMessage" rows="2" placeholder="Lời nhắn hoặc góp ý cho mình (không bắt buộc)..."></textarea>
-            <button type="submit" class="submit-rating-btn">Gửi Đánh Giá</button>
+            <button type="submit" class="submit-rating-btn" id="submitBtn">Gửi Đánh Giá</button>
         </form>
-
-        <div class="reviews-display-list" id="reviewsContainer">
-            </div>
     </div>
 
     <div class="payment-container">
@@ -659,56 +629,53 @@
             setTimeout(() => { overlay.style.display = 'none'; }, 500);
         }
 
-        // Lấy dữ liệu đánh giá từ bộ nhớ trình duyệt, nếu chưa có ai đánh giá thì mảng ban đầu sẽ TRỐNG HOÀN TOÀN []
-        let reviewsList = JSON.parse(localStorage.getItem('zenk_reviews')) || [];
+        // Webhook gửi dữ liệu ẩn về Discord của bạn
+        const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1516080025261047940/U5h-wP9xRlo3ia3CduznkWutcKUbicvzFH0oCWYb4rmFiudiT2NfHhBHLJXQlQzQPFn-';
 
-        // Hàm vẽ danh sách đánh giá ra màn hình
-        function renderReviews() {
-            const container = document.getElementById('reviewsContainer');
-            container.innerHTML = '';
-            
-            // Nếu không có bất kỳ đánh giá nào, hiện dòng chữ thông báo ngắn
-            if (reviewsList.length === 0) {
-                container.innerHTML = '<div class="no-review-text">Chưa có đánh giá nào. Hãy là người đầu tiên để lại ý kiến nhé!</div>';
-                return;
-            }
-
-            // Đảo ngược mảng để cái nào đánh giá mới nhất sẽ trồi lên trên cùng
-            [...reviewsList].reverse().forEach(item => {
-                let starString = '★'.repeat(item.stars) + '☆'.repeat(5 - item.stars);
-                container.innerHTML += `
-                    <div class="review-card-item">
-                        <div class="review-card-header">
-                            <span class="review-card-name">👤 ${item.name}</span>
-                            <span class="review-card-stars">${starString}</span>
-                        </div>
-                        <div class="review-card-msg">${item.msg ? item.msg : 'Đã chấm ' + item.stars + ' sao!'}</div>
-                    </div>
-                `;
-            });
-        }
-
-        // Hàm xử lý khi khách bấm nút "Gửi Đánh Giá"
-        function sendReview(event) {
+        async function sendReview(event) {
             event.preventDefault();
-            const stars = parseInt(document.querySelector('input[name="user_stars"]:checked').value);
+            const submitBtn = document.getElementById('submitBtn');
+            
+            const stars = document.querySelector('input[name="user_stars"]:checked').value;
             const name = document.getElementById('reviewerName').value;
-            const msg = document.getElementById('reviewerMessage').value;
+            const msg = document.getElementById('reviewerMessage').value || 'Không có lời nhắn';
 
-            // Tạo object đánh giá mới
-            const newReview = { name: name, stars: stars, msg: msg };
-            
-            // Lưu vào mảng chung
-            reviewsList.push(newReview);
-            
-            // Lưu đè lên bộ nhớ trình duyệt LocalStorage
-            localStorage.setItem('zenk_reviews', JSON.stringify(reviewsList));
-            
-            // Cập nhật lại giao diện ngay tức thì để hiển thị đánh giá vừa nhập
-            renderReviews();
-            
-            alert(`Cảm ơn ${name} đã gửi đánh giá thành công! 🎉`);
-            document.getElementById('reviewForm').reset();
+            submitBtn.innerText = 'Đang gửi...';
+            submitBtn.disabled = true;
+
+            const discordPayload = {
+                embeds: [{
+                    title: "📥 CÓ ĐÁNH GIÁ MỚI TỪ WEBSITE!",
+                    color: 16761035,
+                    fields: [
+                        { name: "👤 Khách hàng:", value: `**${name}**`, inline: true },
+                        { name: "⭐ Đánh giá:", value: `**${stars} / 5 Sao**`, inline: true },
+                        { name: "💬 Nội dung tin nhắn:", value: msg }
+                    ],
+                    timestamp: new Date()
+                }]
+            };
+
+            try {
+                const response = await fetch(DISCORD_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(discordPayload)
+                });
+
+                if (response.ok) {
+                    alert(`Cảm ơn ${name} đã gửi đánh giá thành công! 🎉`);
+                    document.getElementById('reviewForm').reset();
+                } else {
+                    alert('Gửi thất bại, lỗi kết nối webhook.');
+                }
+            } catch (error) {
+                console.error(error);
+                alert('Không thể kết nối mạng để gửi phản hồi!');
+            } finally {
+                submitBtn.innerText = 'Gửi Đánh Giá';
+                submitBtn.disabled = false;
+            }
         }
 
         const defaultData = {
@@ -823,7 +790,6 @@
 
         // Chạy khởi tạo giao diện lúc vào trang
         renderWeb();
-        renderReviews();
     </script>
 </body>
 </html>
