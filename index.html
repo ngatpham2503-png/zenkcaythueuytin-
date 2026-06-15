@@ -45,7 +45,13 @@
             background-size: 400%;
             border-radius: 15px;
             z-index: -1;
-            animation: borderGlow 6s linear infinite;
+            animation: buttonGlow 6s linear infinite;
+        }
+
+        @keyframes buttonGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .start-web-btn:hover {
@@ -106,14 +112,13 @@
             content: "";
             position: absolute;
             width: 100%;
-            height: 80px; /* Độ rộng của dải sáng la-ze */
+            height: 80px;
             background: linear-gradient(
                 to bottom,
                 transparent,
                 rgba(0, 240, 255, 0.12) 50%,
                 transparent
             );
-            /* Tạo một vệt sáng mỏng xanh nhạt ở giữa dải */
             border-bottom: 2px solid rgba(0, 240, 255, 0.25);
             box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
             top: -100px;
@@ -121,16 +126,10 @@
         }
 
         @keyframes laserScan {
-            0% {
-                top: -100px;
-                opacity: 0;
-            }
+            0% { top: -100px; opacity: 0; }
             5% { opacity: 1; }
             95% { opacity: 1; }
-            100% {
-                top: 100vh;
-                opacity: 0;
-            }
+            100% { top: 100vh; opacity: 0; }
         }
 
         /* --- HIỆU ỨNG BỤI BAY (PARTICLES) NỀN --- */
@@ -161,19 +160,13 @@
         .particle:nth-child(6) { width: 2px; height: 2px; left: 90%; bottom: -10px; animation-duration: 26s; animation-delay: 2s; background: #fff; }
 
         @keyframes floatUp {
-            0% {
-                transform: translateY(0) scale(0.5);
-                opacity: 0;
-            }
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
             10% { opacity: 0.6; }
             90% { opacity: 0.6; }
-            100% {
-                transform: translateY(-105vh) scale(1.2);
-                opacity: 0;
-            }
+            100% { transform: translateY(-105vh) scale(1.2); opacity: 0; }
         }
 
-        /* --- Banner & Avatar --- */
+        /* --- Banner & Avatar với Thanh Sáng Xanh Nhạt Chạy Qua --- */
         .header-container {
             text-align: center;
             padding: 50px 20px 30px;
@@ -186,18 +179,34 @@
             width: 120px;
             height: 120px;
             margin: 0 auto 20px;
-            padding: 3px;
             border-radius: 50%;
-            background: linear-gradient(45deg, #3b82f6, #a855f7, #06b6d4, #3b82f6);
-            background-size: 400%;
-            animation: borderGlow 6s linear infinite;
-            box-shadow: 0 0 25px rgba(59, 130, 246, 0.5);
+            overflow: hidden;
+            border: 2px solid rgba(0, 240, 255, 0.3);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+            background-color: #111827;
         }
 
-        @keyframes borderGlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .avatar-wrapper::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -150%;
+            width: 50%;
+            height: 200%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 240, 255, 0.4) 50%,
+                transparent
+            );
+            transform: rotate(25deg);
+            animation: avatarSheen 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes avatarSheen {
+            0% { left: -150%; }
+            30%, 100% { left: 150%; }
         }
 
         .avatar {
@@ -206,7 +215,6 @@
             border-radius: 50%;
             object-fit: cover;
             display: block;
-            background-color: #111827;
         }
 
         .badge {
@@ -285,45 +293,6 @@
         .discord-btn:hover {
             background-color: #4752c4;
             transform: translateY(-2px);
-        }
-
-        /* --- Khu vực Hỗ trợ --- */
-        .support-container {
-            width: 90%;
-            max-width: 800px;
-            margin: 10px auto 50px auto;
-            text-align: center;
-        }
-
-        .support-box {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid #223047;
-            border-radius: 12px;
-            padding: 25px 20px;
-            backdrop-filter: blur(6px);
-        }
-
-        .support-box p {
-            margin: 0 0 15px 0;
-            font-size: 16px;
-            color: #cbd5e1;
-        }
-
-        .support-btn {
-            display: inline-block;
-            background: linear-gradient(90deg, #10b981, #059669);
-            color: white;
-            text-decoration: none;
-            padding: 12px 30px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .support-btn:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.1);
         }
 
         /* --- Danh sách dịch vụ --- */
@@ -413,6 +382,171 @@
         .price-card .note { font-size: 11px; color: #64748b; margin-top: 5px; }
 
         .accordion-item.active .icon-arrow { transform: rotate(180deg); color: #fff; background: #3b82f6; }
+
+        /* --- KHU VỰC ĐÁNH GIÁ ĐỘNG (FORM CHẤM SAO) --- */
+        .rating-container {
+            width: 90%;
+            max-width: 500px;
+            margin: 30px auto 10px auto;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid #1e293b;
+            border-radius: 16px;
+            padding: 25px 20px;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+
+        .rating-container h2 {
+            font-size: 18px;
+            margin: 0 0 15px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+        }
+
+        /* Logic Chọn Sao Với CSS */
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            font-size: 35px;
+            color: #334155;
+            cursor: pointer;
+            padding: 0 4px;
+            transition: color 0.2s ease, transform 0.1s ease;
+        }
+
+        .star-rating label:hover,
+        .star-rating label:hover ~ label,
+        .star-rating input:checked ~ label {
+            color: #fbbf24;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
+        }
+
+        .star-rating label:active {
+            transform: scale(0.9);
+        }
+
+        .rating-form input[type="text"],
+        .rating-form textarea {
+            width: 100%;
+            background: rgba(10, 15, 26, 0.6);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: #ffffff;
+            font-size: 14px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.25s;
+        }
+
+        .rating-form input[type="text"]:focus,
+        .rating-form textarea:focus {
+            border-color: #3b82f6;
+        }
+
+        .submit-rating-btn {
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .submit-rating-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+
+        /* --- Khu Vực Mã QR Thanh Toán --- */
+        .payment-container {
+            width: 90%;
+            max-width: 400px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .payment-box {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid #223047;
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .payment-box h3 {
+            margin: 0 0 15px 0;
+            font-size: 18px;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        .qr-code-img {
+            width: 100%;
+            max-width: 240px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.05);
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* --- Khu vực Hỗ trợ --- */
+        .support-container {
+            width: 90%;
+            max-width: 800px;
+            margin: 10px auto 50px auto;
+            text-align: center;
+        }
+
+        .support-box {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid #223047;
+            border-radius: 12px;
+            padding: 25px 20px;
+            backdrop-filter: blur(6px);
+        }
+
+        .support-box p {
+            margin: 0 0 15px 0;
+            font-size: 16px;
+            color: #cbd5e1;
+        }
+
+        .support-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #10b981, #059669);
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .support-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
     </style>
 </head>
 <body>
@@ -449,7 +583,34 @@
         <a id="discord-link" href="https://discord.com/invite/eZ7JZf3Nuu" target="_blank" class="discord-btn">Tham Gia Discord Ngay</a>
     </div>
 
-    <div class="services-list" id="main-services-container">
+    <div class="services-list" id="main-services-container"></div>
+
+    <div class="rating-container">
+        <h2>⭐ Đánh giá dịch vụ của mình nhé ⭐</h2>
+        <form class="rating-form" id="reviewForm" onsubmit="sendReview(event)">
+            <div class="star-rating">
+                <input type="radio" id="star5" name="user_stars" value="5" required>
+                <label for="star5" title="5 sao">★</label>
+                <input type="radio" id="star4" name="user_stars" value="4">
+                <label for="star4" title="4 sao">★</label>
+                <input type="radio" id="star3" name="user_stars" value="3">
+                <label for="star3" title="3 sao">★</label>
+                <input type="radio" id="star2" name="user_stars" value="2">
+                <label for="star2" title="2 sao">★</label>
+                <input type="radio" id="star1" name="user_stars" value="1">
+                <label for="star1" title="1 sao">★</label>
+            </div>
+            <input type="text" id="reviewerName" placeholder="Tên của bạn hoặc Tên Discord..." required>
+            <textarea id="reviewerMessage" rows="3" placeholder="Lời nhắn hoặc góp ý cho mình (không bắt buộc)..."></textarea>
+            <button type="submit" class="submit-rating-btn">Gửi Đánh Giá</button>
+        </form>
+    </div>
+
+    <div class="payment-container">
+        <div class="payment-box">
+            <h3>💳 Thanh toán tại đây nhé (có nhận card nhé) </h3>
+            <img class="qr-code-img" src="724769937_2199027270885230_912266117950890536_n.jpg" alt="Mã QR Vietcombank NGUYEN VAN THANG">
+        </div>
     </div>
 
     <div class="support-container">
@@ -469,6 +630,15 @@
             setTimeout(() => {
                 overlay.style.display = 'none';
             }, 500);
+        }
+
+        // Hàm xử lý khi khách bấm gửi đánh giá
+        function sendReview(event) {
+            event.preventDefault();
+            const stars = document.querySelector('input[name="user_stars"]:checked').value;
+            const name = document.getElementById('reviewerName').value;
+            alert(`Cảm ơn ${name} đã đánh giá ${stars} sao cho its_zenk nhé! 🎉`);
+            document.getElementById('reviewForm').reset();
         }
 
         const defaultData = {
