@@ -123,8 +123,8 @@
             display: flex;
             gap: 15px;
             margin: 20px auto;
-            width: 90%;
-            max-width: 800px;
+            width: 95%;
+            max-width: 1120px;
             justify-content: center;
             z-index: 10;
         }
@@ -157,8 +157,8 @@
         /* --- Nội dung các trang --- */
         .web-page {
             display: none;
-            width: 90%;
-            max-width: 800px;
+            width: 95%;
+            max-width: 1120px;
             animation: fadeIn 0.4s ease-in-out forwards;
         }
         .web-page.active {
@@ -209,7 +209,7 @@
         .accordion-item {
             background-color: rgba(17, 24, 39, 0.75); border-radius: 12px; margin-bottom: 15px;
             overflow: hidden; border: 1px solid #1e293b; border-left: 4px solid #3b82f6;
-            backdrop-filter: blur(6px); transition: all 0.3s ease;
+            width: 100%; min-width: 100%; backdrop-filter: blur(6px); transition: all 0.3s ease;
         }
         .accordion-item.level { border-left-color: #3b82f6; }
         .accordion-item.leviathan { border-left-color: #eab308; }
@@ -231,12 +231,13 @@
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
         }
         .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1); background-color: rgba(10, 15, 26, 0.5); }
-        .price-grid { padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .price-grid { padding: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
         .price-card { background-color: rgba(30, 41, 59, 0.45); padding: 18px 15px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.03); text-align: left; }
         .price-card .tier { font-size: 13px; color: #94a3b8; margin-bottom: 6px; }
         .price-card .cost { font-size: 19px; font-weight: bold; color: #f59e0b; }
         .price-card .note { font-size: 11px; color: #64748b; margin-top: 5px; }
         .accordion-item.active .icon-arrow { transform: rotate(180deg); color: #fff; background: #3b82f6; }
+        .services-list { width: 100%; }
 
         /* --- CSS Trang 2: Form điền thông tin đặt hàng --- */
         .notice-box {
@@ -337,6 +338,8 @@
         .support-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
     </style>
 </head>
+
+</div>
 <body>
 
     <div class="scan-line-bg"></div>
@@ -361,6 +364,7 @@
         <div class="username-tag"><span>●</span> its_zenk</div>
     </div>
 
+</div>
     <div class="navigation-tabs">
         <button class="tab-btn active" onclick="switchPage('page-price', this)">
             <i class="fa-solid fa-tags"></i> 1. Bảng Giá Dịch Vụ
@@ -584,7 +588,12 @@
     <div class="support-container">
         <div class="support-box">
             <p>💬 Bạn cần tư vấn thêm hoặc yêu cầu dịch vụ riêng?</p>
-            <a href="https://discord.gg/DyqS5U3E" target="_blank" class="support-btn">Ib Để Được Hỗ Trợ Thêm</a>
+            <div class="support-actions">
+                <a href="https://discord.gg/DyqS5U3E" target="_blank" class="support-btn">Ib Để Được Hỗ Trợ Thêm</a>
+                <a href="https://www.tiktok.com/@tuongvydth18" target="_blank" class="support-btn support-btn--tiktok">
+                    <i class="fa-brands fa-tiktok"></i> TikTok @tuongvydth18
+                </a>
+            </div>
         </div>
     </div>
 
